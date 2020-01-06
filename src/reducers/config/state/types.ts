@@ -17,7 +17,7 @@ export type StorySource = StoryConfigListData | ConfigUrlData;
 export type WordSource = WordConfigData | ConfigUrlData;
 
 export interface ConfigUrlData extends StatefulSource<ConfigUrlData> {
-    readonly configUrl: string;
+    readonly url: string;
 }
 
 interface StatefulSource<T> extends Cloneable<T> {

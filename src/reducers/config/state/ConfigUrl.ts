@@ -3,9 +3,9 @@ import { ConfigUrlData } from './types';
 export class ConfigUrl implements ConfigUrlData {
     readonly loaded: boolean = false;
 
-    constructor(readonly configUrl: string) {}
+    constructor(readonly url: string) {}
 
     clone() {
-        return new ConfigUrl(this.configUrl);
+        return new ConfigUrl(this.url);
     }
 }
