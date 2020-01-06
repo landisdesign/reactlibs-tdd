@@ -1,5 +1,3 @@
-import { LookupAddress } from "dns";
-
 export interface ConfigDataJSON {
 	readonly wordSources: string[];
 	readonly storySource: string;
