@@ -16,15 +16,15 @@ export type StorySource = StoryConfigListData | ConfigUrlData;
 
 export type WordSource = WordConfigData | ConfigUrlData;
 
-export interface ConfigUrlData extends StatefulSource {
+export interface ConfigUrlData extends StatefulSource<ConfigUrlData> {
     readonly configUrl: string;
 }
 
-interface StatefulSource extends Cloneable<ConfigUrlData> {
+interface StatefulSource<T> extends Cloneable<T> {
 	readonly loaded: boolean;
 }
 
-export interface StoryConfigListData extends StatefulSource {
+export interface StoryConfigListData extends StatefulSource<StoryConfigListData> {
     readonly stories: StoryConfigData[];
 }
 
@@ -36,8 +36,8 @@ export interface StoryConfigData {
 }
 
 export type WordConfigData = WordListConfigData | WordRefConfigData;
-export type WordListConfigData = WordListConfigJSON & StatefulSource;
-export type WordRefConfigData = WordRefConfigJSON & StatefulSource;
+export type WordListConfigData = WordListConfigJSON & StatefulSource<WordListConfigData>;
+export type WordRefConfigData = WordRefConfigJSON & StatefulSource<WordRefConfigData>;
 export type WordConfigJSON = WordListConfigJSON | WordRefConfigJSON;
 
 export interface WordListConfigJSON extends WordBaseConfigJSON {
