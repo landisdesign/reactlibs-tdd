@@ -7,5 +7,18 @@
     "editor.rulers": [80],
     "workbench.colorCustomizations": {
         "editorRuler.foreground": "#334466"
-    }
+    },
+    "errorLens.errorTextColor": "rgba(240,220,200,0.4)",
+    "errorLens.hintTextColor": "rgba(20,140,140,1)",
+    "errorLens.infoTextColor": "rgba(0,200,0,0.4)",
+    "errorLens.warningTextColor": "rgba(240,240,240,0.5)",
+    "errorLens.fontWeight": "100",
+    "errorLens.fontMargin": "60px",
+    "workbench.list.horizontalScrolling": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "workbench.tree.indent": 16,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.editor.highlightModifiedTabs": true,
+    "explorer.compactFolders": false
 }
