@@ -1,8 +1,6 @@
-import { Cloneable } from '../../../common/types';
-
 import { ConfigUrlData } from './types';
 
-export class ConfigUrl implements ConfigUrlData, Cloneable<ConfigUrl> {
+export class ConfigUrl implements ConfigUrlData {
     readonly loaded: boolean = false;
 
     constructor(readonly configUrl: string) {}
