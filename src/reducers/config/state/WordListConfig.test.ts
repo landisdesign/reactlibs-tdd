@@ -1,7 +1,7 @@
-import { WordListConfigData } from "./types";
+import { WordListConfigJSON } from "./types";
 import { WordListConfig } from "./WordListConfig";
 
-const sourceData: WordListConfigData = {
+const sourceData: WordListConfigJSON = {
     id: 'a',
     title: 'Word A',
     words: [
@@ -10,7 +10,7 @@ const sourceData: WordListConfigData = {
     ]
 }
 
-const clone = (data: WordListConfigData): WordListConfigData => ({
+const clone = (data: WordListConfigJSON): WordListConfigJSON => ({
     ...data,
     words: [...data.words]
 });

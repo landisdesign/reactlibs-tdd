@@ -12,13 +12,15 @@ export interface ConfigData {
     readonly wordSources: WordConfigData[] | ConfigUrlData[];
 }
 
-export interface ConfigUrlData {
+export interface ConfigUrlData extends StatefulSource {
     readonly configUrl: string;
-    readonly loaded: boolean;
 }
 
-export interface StoryConfigListData {
-    readonly loaded: boolean;
+interface StatefulSource {
+	readonly loaded: boolean;
+}
+
+export interface StoryConfigListData extends StatefulSource {
     readonly stories: StoryConfigData[];
 }
 
@@ -29,21 +31,20 @@ export interface StoryConfigData {
 	readonly template: string;
 }
 
-export type WordConfigData = WordConfigJSON & {
-	readonly loaded: boolean;
-};
+export type WordConfigData = WordListConfigData | WordRefConfigData;
+export type WordListConfigData = WordListConfigJSON & StatefulSource;
+export type WordRefConfigData = WordRefConfigJSON & StatefulSource;
+export type WordConfigJSON = WordListConfigJSON | WordRefConfigJSON;
 
-export type WordConfigJSON = WordListConfigData | WordRefConfigData;
-
-export interface WordListConfigData extends WordBaseConfigData {
+export interface WordListConfigJSON extends WordBaseConfigJSON {
 	readonly words: string[];
 }
 
-export interface WordRefConfigData extends WordBaseConfigData {
+export interface WordRefConfigJSON extends WordBaseConfigJSON {
 	readonly ref: string;
 }
 
-interface WordBaseConfigData {
+interface WordBaseConfigJSON {
 	readonly id: string;
 	readonly title: string;
 	readonly help?: string;

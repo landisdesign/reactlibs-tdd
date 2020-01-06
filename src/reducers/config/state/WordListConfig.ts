@@ -1,6 +1,6 @@
 import { assign } from '../../../common';
 
-import { WordListConfigData } from "./types";
+import { WordListConfigData, WordListConfigJSON } from "./types";
 import { Cloneable } from '../../../common/types';
 
 export class WordListConfig implements WordListConfigData, Cloneable<WordListConfig> {
@@ -10,7 +10,7 @@ export class WordListConfig implements WordListConfigData, Cloneable<WordListCon
     help?: string;
     words: string[] = [];
 
-    constructor(data: WordListConfigData) {
+    constructor(data: WordListConfigJSON) {
         assign(this, data);
         this.words = [...data.words];
     }
