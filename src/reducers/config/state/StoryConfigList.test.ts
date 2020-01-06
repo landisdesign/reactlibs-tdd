@@ -34,6 +34,10 @@ test('Constructor hydrates data', () => {
 
     expect(actual.stories).toEqual(sourceData);
     expect(actual.stories).not.toBe(expected);
+    actual.stories.forEach((actualStory, i) => {
+        expect(actualStory).not.toBe(expected[i]);
+        expect(actualStory.fields).not.toBe(expected[i].fields);
+    })
 });
 
 test('Hydrated object indicates loaded', () => {
