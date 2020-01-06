@@ -1,3 +1,5 @@
+import { Cloneable } from "../../../common/types";
+
 export interface ConfigDataJSON {
 	readonly wordSources: string[];
 	readonly storySource: string;
@@ -18,7 +20,7 @@ export interface ConfigUrlData extends StatefulSource {
     readonly configUrl: string;
 }
 
-interface StatefulSource {
+interface StatefulSource extends Cloneable<ConfigUrlData> {
 	readonly loaded: boolean;
 }
 
