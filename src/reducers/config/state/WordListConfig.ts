@@ -1,9 +1,8 @@
 import { assign } from '../../../common';
 
 import { WordListConfigData, WordListConfigJSON } from "./types";
-import { Cloneable } from '../../../common/types';
 
-export class WordListConfig implements WordListConfigData, Cloneable<WordListConfig> {
+export class WordListConfig implements WordListConfigData {
     loaded: boolean = true;
     id: string = '';
     title: string = '';

@@ -1,8 +1,7 @@
 import { WordRefConfigData, WordRefConfigJSON } from "./types";
 import { assign } from "../../../common";
-import { Cloneable } from "../../../common/types";
 
-export class WordRefConfig implements WordRefConfigData, Cloneable<WordRefConfig> {
+export class WordRefConfig implements WordRefConfigData {
     loaded: boolean = true;
     id: string = '';
     ref: string = '';

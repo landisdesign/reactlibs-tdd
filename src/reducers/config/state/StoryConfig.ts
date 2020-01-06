@@ -1,10 +1,9 @@
 import { assign } from '../../../common';
-import { Cloneable } from '../../../common/types';
 
 import { StoryConfigData } from "./types";
 
 
-export class StoryConfig implements StoryConfigData, Cloneable<StoryConfig> {
+export class StoryConfig implements StoryConfigData {
     id: string = '';
     title: string = '';
     fields: string[] = [];

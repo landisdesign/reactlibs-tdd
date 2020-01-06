@@ -1,8 +1,7 @@
 import { StoryConfigData, StoryConfigListData } from './types';
 import { StoryConfig } from './StoryConfig';
-import { Cloneable } from '../../../common/types';
 
-export class StoryConfigList implements StoryConfigListData, Cloneable<StoryConfigList> {
+export class StoryConfigList implements StoryConfigListData {
     loaded: boolean = true;
     stories: StoryConfigData[];
 
