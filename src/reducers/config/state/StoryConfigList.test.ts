@@ -28,16 +28,20 @@ const clone = (source: StoryConfigData[]) => source.map(story => {
     return newStory;
 })
 
+const testStoriesEqualButDifferent = (actual: StoryConfigData[], expected: StoryConfigData[]) => {
+    expect(actual).not.toBe(expected);
+    actual.forEach((actualStory, i) => {
+        expect(actualStory).not.toBe(expected[i]);
+        expect(actualStory.fields).not.toBe(expected[i].fields);
+    });
+}
+
 test('Constructor hydrates data', () => {
     const expected = clone(sourceData);
     const actual = new StoryConfigList(expected);
 
     expect(actual.stories).toEqual(sourceData);
-    expect(actual.stories).not.toBe(expected);
-    actual.stories.forEach((actualStory, i) => {
-        expect(actualStory).not.toBe(expected[i]);
-        expect(actualStory.fields).not.toBe(expected[i].fields);
-    })
+    testStoriesEqualButDifferent(actual.stories, expected);
 });
 
 test('Hydrated object indicates loaded', () => {
@@ -54,4 +58,5 @@ test('Cloneable', () => {
 
     expect(actual).not.toBe(expected);
     expect(actual).toEqual(expected);
+    testStoriesEqualButDifferent(actual.stories, expected.stories);
 });
