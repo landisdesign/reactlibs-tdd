@@ -32,7 +32,8 @@ test('Constructor hydrates data', () => {
     const expected = clone(sourceData);
     const actual = new StoryConfigList(expected);
 
-    expect(actual.stories).toEqual(sourceData); // ensure nothing changed in the hydration
+    expect(actual.stories).toEqual(sourceData);
+    expect(actual.stories).not.toBe(expected);
 });
 
 test('Hydrated object indicates loaded', () => {
