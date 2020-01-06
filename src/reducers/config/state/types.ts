@@ -8,9 +8,13 @@ export interface ConfigDataJSON {
 export interface ConfigData {
     readonly loading: boolean;
     readonly loaded: boolean;
-    readonly storySource: StoryConfigListData | ConfigUrlData;
-    readonly wordSources: WordConfigData[] | ConfigUrlData[];
+    readonly storySource: StorySource;
+    readonly wordSources: WordSource[];
 }
+
+export type StorySource = StoryConfigListData | ConfigUrlData;
+
+export type WordSource = WordConfigData | ConfigUrlData;
 
 export interface ConfigUrlData extends StatefulSource {
     readonly configUrl: string;
