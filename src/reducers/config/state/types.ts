@@ -1,3 +1,5 @@
+import { LookupAddress } from "dns";
+
 export interface ConfigDataJSON {
 	readonly wordSources: string[];
 	readonly storySource: string;
@@ -27,7 +29,11 @@ export interface StoryConfigData {
 	readonly template: string;
 }
 
-export type WordConfigData = WordListConfigData | WordRefConfigData;
+export type WordConfigData = WordConfigJSON & {
+	readonly loaded: boolean;
+};
+
+export type WordConfigJSON = WordListConfigData | WordRefConfigData;
 
 export interface WordListConfigData extends WordBaseConfigData {
 	readonly words: string[];
@@ -40,7 +46,7 @@ export interface WordRefConfigData extends WordBaseConfigData {
 interface WordBaseConfigData {
 	readonly id: string;
 	readonly title: string;
-	readonly help: string;
+	readonly help?: string;
 }
 
 export interface ConfigProgress {
