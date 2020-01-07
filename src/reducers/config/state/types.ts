@@ -47,6 +47,7 @@ export interface WordRefConfigJSON extends WordBaseConfigJSON {
 }
 
 interface WordBaseConfigJSON {
+	readonly loaded: boolean;
 	readonly id: string;
 	readonly title: string;
 	readonly help?: string;
