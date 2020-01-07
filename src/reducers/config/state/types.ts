@@ -5,11 +5,14 @@ export interface ConfigDataJSON {
 	readonly storySource: string;
 }
 
-export interface ConfigData {
+export interface ConfigData extends StatefulSource<ConfigData> {
     readonly loading: boolean;
-    readonly loaded: boolean;
     readonly storySource: StorySource;
     readonly wordSources: WordSource[];
+}
+
+interface StatefulSource<T> extends Cloneable<T> {
+	readonly loaded: boolean;
 }
 
 export type StorySource = StoryConfigListData | ConfigUrlData;
@@ -18,10 +21,6 @@ export type WordSource = WordConfigData | ConfigUrlData;
 
 export interface ConfigUrlData extends StatefulSource<ConfigUrlData> {
     readonly url: string;
-}
-
-interface StatefulSource<T> extends Cloneable<T> {
-	readonly loaded: boolean;
 }
 
 export interface StoryConfigListData extends StatefulSource<StoryConfigListData> {
