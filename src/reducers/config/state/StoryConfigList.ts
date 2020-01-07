@@ -1,11 +1,11 @@
-import { StoryConfigData, StoryConfigListData } from './types';
+import { StoryConfigListData, StoryConfigJSON } from './types';
 import { StoryConfig } from './StoryConfig';
 
 export class StoryConfigList implements StoryConfigListData {
     loaded: boolean = true;
-    stories: StoryConfigData[];
+    stories: StoryConfig[];
 
-    constructor(stories: StoryConfigData[]) {
+    constructor(stories: StoryConfigJSON[]) {
         this.stories = stories.map(story => new StoryConfig(story));
     }
 
