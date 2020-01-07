@@ -7,7 +7,7 @@ export interface ConfigDataJSON {
 
 export interface ConfigData extends StatefulSource<ConfigData> {
     readonly loading: boolean;
-    readonly storySource: StorySource;
+    readonly storySource: StorySource | null;
     readonly wordSources: WordSource[];
 }
 
