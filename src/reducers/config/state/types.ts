@@ -1,5 +1,4 @@
 import { Cloneable } from "../../../common/types";
-import { StoryConfig } from "./StoryConfig";
 
 export interface ConfigDataURLs {
 	readonly wordSources: string[];
