@@ -1,4 +1,4 @@
-### reactlibs-tdd
+# reactlibs-tdd
 
 The previous project, [`reactlibs-ts`](https://github.com/landisdesign/reactlibs-ts),
 helped me understand more about TypeScript and class-based components, but I
