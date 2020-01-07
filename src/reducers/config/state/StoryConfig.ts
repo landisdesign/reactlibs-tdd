@@ -1,6 +1,6 @@
 import { assign } from '../../../common';
 
-import { StoryConfigData } from "./types";
+import { StoryConfigData, StoryConfigJSON } from "./types";
 
 
 export class StoryConfig implements StoryConfigData {
@@ -9,7 +9,7 @@ export class StoryConfig implements StoryConfigData {
     fields: string[] = [];
     template: string = '';
 
-    constructor(data: StoryConfigData) {
+    constructor(data: StoryConfigJSON) {
         assign(this, data);
         this.fields = [...this.fields];
     }
