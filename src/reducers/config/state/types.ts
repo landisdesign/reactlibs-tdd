@@ -62,6 +62,7 @@ export interface ConfigData extends ConfigDataJSON, Cloneable<ConfigData> {
 
 	addStoryConfig: (story: StoryConfigListData) => ConfigData;
 	addWordConfig: (word: WordConfigData, index: number) => ConfigData;
+	getProgress: () => ConfigProgress;
 }
 
 export type StorySource = StoryConfigListData | ConfigUrlData;
