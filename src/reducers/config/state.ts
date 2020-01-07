@@ -1,3 +1,8 @@
+export interface ConfigUrls {
+    readonly storySource: string;
+    readonly wordSources: string[];
+}
+
 export interface ConfigState {
     readonly loaded: boolean;
     readonly loading: boolean;
