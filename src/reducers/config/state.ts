@@ -6,7 +6,7 @@ export interface ConfigUrls {
 export interface ConfigState {
     readonly loaded: boolean;
     readonly loading: boolean;
-    readonly storySources: StorySource;
+    readonly storySource: StorySource;
     readonly wordSources: WordSource[];
 }
 
