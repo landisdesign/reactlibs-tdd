@@ -165,7 +165,7 @@ describe('fetchConfig retrieves config and dispatches', () => {
 
     test('delays reconciliation for at least as long as minDelay', () => {
         const store = mockStore({});
-        const delay = 3000;
+        const delay = 1000;
         const now = Date.now();
         const expectedTime = now + delay;
         const slush = 10;
