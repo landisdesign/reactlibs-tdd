@@ -16,17 +16,24 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/enzyme": "^3.10.4",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.25",
+    "@types/redux-mock-store": "^1.0.1",
+    "@types/whatwg-fetch": "0.0.33",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^24.9.0",
+    "jest-fetch-mock": "^3.0.1",
     "react-test-renderer": "^16.12.0",
+    "redux-mock-store": "^1.5.4",
     "ts-jest": "^24.2.0"
   },
   "scripts": {

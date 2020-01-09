@@ -7,3 +7,5 @@ export const assign = <T, K extends keyof T>(arg0: T, ...args: T[]): T =>
         }, result)
     , arg0)
 ;
+
+export const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
