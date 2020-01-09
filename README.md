@@ -8,6 +8,14 @@ felt drawn to focus time and efforts on drilling this into my way of thinking.
 
 ## Improvements from `reactlibs-ts`
 
+After working on this code base for a while I'm looking at improving the clarity
+of the code, tightening the individual functions and considering their placement
+in individual modules. I'm taking advantage of function hoisting to put the
+top-level API at the top of the file and the helper methods below it, rather
+than setting up the code for the grand finale. I find this gives a better lay of
+the land up front and sets the stage better for why the helper functions exist,
+rather than throwing blocks of code in like recipe ingredients.
+
 ### State simplification
 
 As I completed the previous project, I saw how complicated state got as I
