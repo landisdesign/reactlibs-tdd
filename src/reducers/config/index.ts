@@ -1,11 +1,32 @@
-import { ConfigState, ConfigUrls, WordSource } from "./state";
-import { ConfigAction, LOAD_CONFIG, LOAD_WORD } from "./actions";
-import { DEFAULT_ACTION_TYPE, StateConverter } from "..";
+import { ConfigState, ConfigUrls, WordSource, Story } from "./state";
+import { ConfigAction, LOAD_CONFIG, LOAD_WORD, LOAD_STORIES, RECONCILE_CONFIG, APPLICATION_READY } from "./actions";
+import { StateConverter } from "..";
 
 export function config(state: ConfigState = initialState, action: ConfigAction): ConfigState {
-    const convertState = stateConverters[action.type] ?? stateConverters[DEFAULT_ACTION_TYPE];
-    return convertState(state, action);
+    const convertState = stateConverters[action.type];
+    if (convertState) {
+        if (action.error) {
+            return {
+                ...cloneState(state),
+                error: action.payload
+            };
+        }
+        else {
+            return convertState(state, action);
+        }
+    }
+    else {
+        return state;
+    }
 }
+
+const stateConverters: {[index:string]: StateConverter<ConfigState, ConfigAction>} = {
+    [LOAD_CONFIG]: convertLoadConfig,
+    [LOAD_WORD]: convertLoadWord,
+    [LOAD_STORIES]: convertLoadStory,
+    [RECONCILE_CONFIG]: convertReconcileConfig,
+    [APPLICATION_READY]: convertApplicationReady
+};
 
 const initialState: ConfigState = {
     loaded: false,
@@ -17,19 +38,7 @@ const initialState: ConfigState = {
     wordSources: []
 }
 
-const stateConverters: {[index:string]: StateConverter<ConfigState, ConfigAction>} = {
-    [DEFAULT_ACTION_TYPE]: (state) => state,
-    [LOAD_CONFIG]: convertLoadConfig,
-    [LOAD_WORD]: convertLoadWord
-};
-
 function convertLoadConfig(state: ConfigState, action: ConfigAction) {
-    if (action.error) {
-        return {
-            ...cloneState(state),
-            error: action.error
-        };
-    }
 
     const configUrls: ConfigUrls = action.payload;
     return {
@@ -47,12 +56,6 @@ function convertLoadConfig(state: ConfigState, action: ConfigAction) {
 }
 
 function convertLoadWord(state: ConfigState, action: ConfigAction) {
-    if (action.error) {
-        return {
-            ...cloneState(state),
-            error: action.error
-        };
-    }
 
     const {
         word,
@@ -72,12 +75,39 @@ function convertLoadWord(state: ConfigState, action: ConfigAction) {
         };
     }
 
+    const wordAdditions = 'words' in word ? { loaded: true, words: [...word.words] } : { loaded: true};
     const wordSources:WordSource[] = [...state.wordSources];
-    wordSources[index] = {...word, loaded: true};
+    wordSources[index] = {...word, ...wordAdditions};
 
     return {
         ...cloneState(state),
         wordSources
+    };
+}
+
+function convertLoadStory(state: ConfigState, action: ConfigAction) {
+
+    const stories: Story[] = action.payload;
+    return {
+        ...cloneState(state),
+        storySource: {
+            loaded: true,
+            stories: stories.map(story => ({...story, fields: [...story.fields]}))
+        }
+    };
+}
+
+function convertReconcileConfig(state: ConfigState) {
+    return {
+        ...cloneState(state),
+        loaded: true
+    };
+}
+
+function convertApplicationReady(state: ConfigState) {
+    return {
+        ...cloneState(state),
+        loading: false
     };
 }
 

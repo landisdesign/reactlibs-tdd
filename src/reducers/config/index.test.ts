@@ -1,6 +1,7 @@
-import { ConfigState, ConfigUrls, WordRef, WordList } from "./state";
-import { ConfigAction, loadConfig, loadWord } from "./actions";
+import { ConfigState, ConfigUrls, WordRef, WordList, Story, StoryList } from "./state";
+import { ConfigAction, loadConfig, loadWord, loadStories, reconcileConfig, applicationReady } from "./actions";
 import { config } from ".";
+import { BaseAction } from "..";
 
 const initialState: ConfigState = {
     loaded: false,
@@ -10,6 +11,25 @@ const initialState: ConfigState = {
         url: ''
     },
     wordSources: []
+};
+
+const configgedState: ConfigState = {
+    loaded: false,
+    loading: true,
+    storySource: {
+        loaded: false,
+        url: 'stories.json'
+    },
+    wordSources: [
+        {
+            loaded: false,
+            url: 'wordA.json'
+        },
+        {
+            loaded: false,
+            url: 'wordB.json'
+        }
+    ]
 };
 
 const cloneState = (source: ConfigState): ConfigState => ({
@@ -59,24 +79,6 @@ test('populates config URLs on LOAD_CONFIG', () => {
 });
 
 test('replaces proper word config on LOAD_WORD', () => {
-    const priorState = {
-        loaded: false,
-        loading: true,
-        storySource: {
-            loaded: false,
-            url: 'stories.json'
-        },
-        wordSources: [
-            {
-                loaded: false,
-                url: 'wordA.json'
-            },
-            {
-                loaded: false,
-                url: 'wordB.json'
-            }
-        ]
-    };
 
     const wordRef: WordRef = {
         id: 'wordA',
@@ -85,14 +87,14 @@ test('replaces proper word config on LOAD_WORD', () => {
     };
     const wordRefAction = loadWord(wordRef, 0);
     const expectedRef = {
-        ...cloneState(priorState),
-        wordSources: [{...wordRef, loaded: true}, priorState.wordSources[1]]
+        ...cloneState(configgedState),
+        wordSources: [{...wordRef, loaded: true}, configgedState.wordSources[1]]
     };
 
-    const actualRef = config(priorState, wordRefAction);
+    const actualRef = config(configgedState, wordRefAction);
     expect(actualRef).toEqual(expectedRef);
     expect(actualRef.error).toBeUndefined();
-    expect(actualRef).not.toBe(priorState);
+    expect(actualRef).not.toBe(configgedState);
 
     const wordList: WordList = {
         id: 'wordB',
@@ -120,9 +122,58 @@ test('replaces proper word config on LOAD_WORD', () => {
     expect(actualHigh.error).toBeTruthy();
 });
 
-test.todo('replaces story config on LOAD_STORIES');
-test.todo('indicates state is loaded on RECONCILE_CONFIG');
-test.todo('indicates state is finished loading on APPLICATION_READY');
+test('replaces story config on LOAD_STORIES', () => {
+    const stories: Story[] = [
+        {
+            id: 'a',
+            title: 'Story A',
+            fields: ['Word A', 'Word B'],
+            template: 'Template A'
+        }
+    ];
+    const storyAction = loadStories(stories);
+    const expected = {
+        ...cloneState(configgedState),
+        storySource: {
+            loaded: true,
+            stories
+        }
+    }
+
+    const actual = config(configgedState, storyAction);
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(configgedState);
+    expect((actual.storySource as StoryList).stories).not.toBe(stories);
+});
+
+
+test('indicates state is loaded on RECONCILE_CONFIG', () => {
+    const reconcile = reconcileConfig();
+    const expected = {
+        ...cloneState(initialState),
+        loaded: true
+    }
+    const actual = config(initialState, reconcile);
+
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(initialState);
+});
+
+test('indicates state is finished loading on APPLICATION_READY', () => {
+    const ready = applicationReady();
+    const initial = {
+        ...cloneState(initialState),
+        loading: true
+    }
+    const expected = {
+        ...cloneState(initialState),
+        loading: false
+    }
+    const actual = config(initial, ready);
+
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(initial);
+});
 
 test('passes through existing state unchanged when unrecognized action provided', () => {
     const dummyAction: ConfigAction = { type: 'FOO' };
@@ -131,4 +182,40 @@ test('passes through existing state unchanged when unrecognized action provided'
 
     expect(actual).toBe(expected);
     expect(actual).toEqual(expected);
+});
+
+test('Returns error conditions from fetch-based actions', () => {
+    const errorProperties = {
+        payload: 'Error',
+        error: true
+    };
+
+    const expected = {
+        ...cloneState(initialState),
+        error: errorProperties.payload
+    };
+
+    const configErrorAction = {
+        ...loadConfig({storySource:'', wordSources:[]}),
+        ...errorProperties
+    };
+    let actual = config(initialState, configErrorAction);
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(initialState);
+
+    const wordErrorAction = {
+        ...loadWord({id: 'a', title: 'A', ref: 'a'}, 0),
+        ...errorProperties
+    };
+    actual = config(initialState, wordErrorAction);
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(initialState);
+
+    const storyErrorAction = {
+        ...loadStories([]),
+        ...errorProperties
+    };
+    actual = config(initialState, storyErrorAction);
+    expect(actual).toEqual(expected);
+    expect(actual).not.toBe(initialState);
 });
