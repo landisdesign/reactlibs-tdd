@@ -207,9 +207,14 @@ function getObjectStructureErrors<T>(objectName: string, keyName: string, validS
     type Key<T> = keyof T;
 
     const validType = typeof validStructure;
+    const incomingType = typeof incomingObject;
+
+    if (validType !== incomingType) {
+        return `${objectName}: Type mismatch: ${keyName} is supposed to be ${validType}, is ${incomingType}`;
+    }
+
     if (validType !== 'object') {
-        const incomingType = typeof incomingObject;
-        return incomingType !== validType ? `${objectName}: Type mismatch: ${keyName} is supposed to be ${validType}, is ${incomingType}` : undefined;
+        return;
     }
 
     if (Array.isArray(validStructure)) {
