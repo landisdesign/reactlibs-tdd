@@ -6,6 +6,7 @@ export interface ConfigUrls {
 export interface ConfigState {
     readonly loaded: boolean;
     readonly loading: boolean;
+    readonly error?: any;
     readonly storySource: StorySource;
     readonly wordSources: WordSource[];
 }
@@ -30,7 +31,11 @@ export interface Story {
     readonly template: string;
 }
 
-export type Word = WordRef | WordList;
+export type Word = WordJSON & {
+    loaded: boolean;
+}
+
+export type WordJSON = WordRef | WordList;
 
 export interface WordRef extends WordBase {
     readonly ref: string;
@@ -41,7 +46,6 @@ export interface WordList extends WordBase {
 }
 
 interface WordBase {
-	readonly loaded: boolean;
 	readonly id: string;
 	readonly title: string;
 	readonly help?: string;

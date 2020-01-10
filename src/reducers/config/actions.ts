@@ -1,5 +1,5 @@
 import { BaseAction, ReactlibThunkAction, ReactlibThunkDispatch } from "..";
-import { ConfigUrls, Word, Story, WordRef, WordList } from "./state";
+import { ConfigUrls, Story, WordRef, WordList, WordJSON } from "./state";
 import { sleep, arraysEqual } from "../../common";
 
 export const LOAD_CONFIG = 'LOAD_CONFIG';
@@ -18,7 +18,7 @@ export interface LoadStoriesAction extends BaseAction {
 
 export interface LoadWordAction extends BaseAction {
     readonly payload: {
-        readonly word: Word;
+        readonly word: WordJSON;
         readonly index: number;
     };
 }
@@ -45,7 +45,7 @@ export const loadStories = (stories: Story[]): LoadStoriesAction => ({
     }))
 });
 
-export const loadWord = (word: Word, index: number): LoadWordAction => ({
+export const loadWord = (word: WordJSON, index: number): LoadWordAction => ({
     type: LOAD_WORD,
     payload: {
         word: 'words' in word
@@ -102,9 +102,9 @@ export const fetchConfig = (configUrl: string, minDelay: number): ReactlibThunkA
 }
 
 async function fetchWordConfig(dispatch: ReactlibThunkDispatch, wordSource: string, index: number) {
-    const errorActionTemplate = loadWord({} as Word, index);
+    const errorActionTemplate = loadWord({} as WordJSON, index);
     const wordData = await fetchData(wordSource, getWordStructureErrors, errorActionTemplate);
-    dispatch(loadWord(wordData as Word, index));
+    dispatch(loadWord(wordData as WordJSON, index));
 }
 
 async function fetchStoryConfig(dispatch: ReactlibThunkDispatch, storySource: string) {
@@ -175,7 +175,7 @@ const getWordStructureErrors: StructureValidator = (incomingData: any) => {
     const helpStructure = 'help' in incomingData ? { help: '' } : {};
 
     if ('ref' in incomingData) {
-        const testStructure: Omit<WordRef, 'loaded'> = {
+        const testStructure: WordRef = {
             ...helpStructure,
             ...commonData,
             ref: ''
@@ -183,7 +183,7 @@ const getWordStructureErrors: StructureValidator = (incomingData: any) => {
         return getObjectStructureErrors('WordRef', '', testStructure, incomingData);
     }
     else {
-        const testStructure: Omit<WordList, 'loaded'> = {
+        const testStructure: WordList = {
             ...helpStructure,
             ...commonData,
             words: ['']
