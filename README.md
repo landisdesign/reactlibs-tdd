@@ -20,15 +20,53 @@ rather than throwing blocks of code in like recipe ingredients.
 
 As I completed the previous project, I saw how complicated state got as I
 attempted to create concrete clases from the state interfaces. This time I
-statyed away from this, making the modifications to the state literal as needed
+stayed away from this, making the modifications to the state literal as needed
 in the reducers themselves.
 
-For `config` I also simplified `fetchConfig`, which was one of my first attempts
-at working with `async`/`await`. This time I converted all of my Promise
-references (except `Promise.all`) and moved the internal functions out of the
-thunk. I also moved the delay functionality into the array of asynchronous
-functions, so that I didn't have to do an additional async step within the
-`Promise.all` argument.
+#### Strategies instead of `switch`
+
+One of my favorite GoF patterns is the
+[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern). When I look
+at typical reducer functionality, it involves choosing an algorithm
+dependent upon the incoming action type, and using that algorithm to create a
+new instance of the state based upon the action's payload. Frequently this
+appears as a collection of statements in cases associated with the action type,
+but this is exactly what the Strategy pattern is designed for.
+
+In my previous iterations of this application, I chose to follow the standards
+presented in most tutorials. This time, I chose to build my reducer using an
+action type-keyed associative array that returned algorithms instead. I feel
+this lets the reader of the code skip through the reducer and go to the specific
+function associated with the action type. It reduces the logic complexity of the
+reducer code, consolidating all of the different possible execution routes into
+a single top-to-bottom flow.
+
+It is different than what others may expect, based upon their experience and
+learning, so I hesitate to introduce it to mature code bases without getting
+buy-in from the others impacted by this change.
+
+#### Streamlining and adding error handling to `fetchConfig`
+
+`fetchConfig` was one of my first attempts at working with `async`/`await`, and
+I didn't have the time to work out all of the nuances differentiating this
+syntax from traditional Promise usage. For this iteration I took the time to
+translate all of my Promise references (except `Promise.all`) and I appreciate
+how much clearer it is.
+
+The next thing I looked at was adding error handling to the JSON retrieval. I'd
+purposely avoided handling this in prior iterations, as I was working on MVP to
+illustrate my ability to work with React in and out of TypeScript. As I began
+speaking with security-oriented companies, I realized I hadn't given a
+demonstration of my ability to recognize and manage boundary conditions.
+
+I can rely upon `JSON.parse` to validate that the incoming JSON is well-formed,
+but it returns objects of type `any`, so I cannot guarantee that the provided
+object is actually of the type I require. To address this I had to build a
+structure validation system. (I can imagine that such things exist on npm, but
+this was more fun.)
+
+As I added the error handling to each of the fetches, it occurred to me that I
+had enough consistency between fetches to DRY the code, resulting in `fetchData`.
 
 ---
 
