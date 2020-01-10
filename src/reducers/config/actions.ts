@@ -90,14 +90,13 @@ export const fetchConfig = (configUrl: string, minDelay: number): ReactlibThunkA
             fetches.push(createDelay(minDelay - initialDelay));
         }
 
-        return Promise.all(fetches).then(
-            () => {
-                return dispatch(reconcileConfig())
-            },
-            (rejection: ConfigAction) => {
-                return dispatch(rejection);
-            }
-        );
+        try {
+            await Promise.all(fetches);
+            return dispatch(reconcileConfig());
+        }
+        catch (error) {
+            return dispatch(error);
+        }
     };
 }
 
