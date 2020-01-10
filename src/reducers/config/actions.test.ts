@@ -154,16 +154,24 @@ describe('fetchConfig retrieves config and dispatches', () => {
         global.fetch.mockResponse(getResponse(responsesData));
     });
 
+    /*
+     * NOTE ON await store.dispatch() calls:
+     *
+     * The mock store does not take the type changes applied by reaact-thunk.
+     * This means the TypeScript doesn't recognise fetchConfig as a valid
+     * subtype of AnyAction, and does not recognize that store.dispatch is async
+     * with thunks.
+     *
+     * VS Code erroneously hints that the call doesn't require async. It does.
+     */
     test('fetches URLs and dispatches proper actions', async () => {
         const store = mockStore({});
-        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction) // applying thunk doesn't apply ThunkAction union in mock
-            .then(() => {
-                const actions = store.getActions();
-                expect(actions[0]).toEqual(expectedStartAction);
-                expect(actions.slice(1, 1 + expectedDataActions.length)).toEqual(expect.arrayContaining(expectedDataActions));
-                expect(actions[actions.length - 1]).toEqual(expectedEndActions[0]);
-            })
-        ;
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction);
+
+        const actions = store.getActions();
+        expect(actions[0]).toEqual(expectedStartAction);
+        expect(actions.slice(1, 1 + expectedDataActions.length)).toEqual(expect.arrayContaining(expectedDataActions));
+        expect(actions[actions.length - 1]).toEqual(expectedEndActions[0]);
     });
 
     test('delays reconciliation for at least as long as minDelay', async () => {
@@ -172,13 +180,12 @@ describe('fetchConfig retrieves config and dispatches', () => {
         const now = Date.now();
         const expectedTime = now + delay;
         const slush = 10;
-        await store.dispatch((fetchConfig('config.json', delay) as unknown) as AnyAction)
-            .then(() => {
-                const end = Date.now();
-                const timeFromExpected = Math.abs(end - expectedTime);
-                expect(timeFromExpected).toBeLessThanOrEqual(slush);
-            })
-        ;
+
+        await store.dispatch((fetchConfig('config.json', delay) as unknown) as AnyAction);
+
+        const end = Date.now();
+        const timeFromExpected = Math.abs(end - expectedTime);
+        expect(timeFromExpected).toBeLessThanOrEqual(slush);
     });
 
     test('Errors on bad config JSON', async () => {
@@ -191,12 +198,10 @@ describe('fetchConfig retrieves config and dispatches', () => {
         global.fetch.mockResponse(getResponse(badResponses));
 
         const store = mockStore({});
-        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
-            .then(() => {
-                const actions = store.getActions();
-                expect(actions[0].error).toEqual(true);
-            })
-        ;
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction);
+
+        const actions = store.getActions();
+        expect(actions[0].error).toEqual(true);
     });
 
     test('Errors on bad story JSON', async () => {
@@ -209,18 +214,16 @@ describe('fetchConfig retrieves config and dispatches', () => {
         global.fetch.mockResponse(getResponse(badResponses));
 
         const store = mockStore({});
-        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
-            .then(() => {
-                store.getActions().forEach(action => {
-                    if (action.type === LOAD_STORIES) {
-                        expect(action.error).toBe(true);
-                    }
-                    else {
-                        expect(action.error).toBeUndefined();
-                    }
-                });
-            })
-        ;
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction);
+
+        store.getActions().forEach(action => {
+            if (action.type === LOAD_STORIES) {
+                expect(action.error).toBe(true);
+            }
+            else {
+                expect(action.error).toBeUndefined();
+            }
+        });
     });
 
     test('Errors on bad word JSON', async () => {
@@ -233,22 +236,20 @@ describe('fetchConfig retrieves config and dispatches', () => {
         global.fetch.mockResponse(getResponse(badResponses));
 
         const store = mockStore({});
-        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
-            .then(() => {
-                store.getActions().forEach(action => {
-                    if (action.type === LOAD_WORD) {
-                        if (action.payload.index === 1) {
-                            expect(action.error).toBeUndefined();
-                        }
-                        else {
-                            expect(action.error).toBe(true);
-                        }
-                    }
-                    else {
-                        expect(action.error).toBeUndefined();
-                    }
-                });
-            })
-        ;
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction);
+
+        store.getActions().forEach(action => {
+            if (action.type === LOAD_WORD) {
+                if (action.payload.index === 1) {
+                    expect(action.error).toBeUndefined();
+                }
+                else {
+                    expect(action.error).toBe(true);
+                }
+            }
+            else {
+                expect(action.error).toBeUndefined();
+            }
+        });
     });
 });
