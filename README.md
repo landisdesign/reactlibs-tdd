@@ -68,6 +68,16 @@ this was more fun.)
 As I added the error handling to each of the fetches, it occurred to me that I
 had enough consistency between fetches to DRY the code, resulting in `fetchData`.
 
+#### Simplification of entries reducer
+
+Initially I'd intended to present the previous entries from each story, so that
+as the user switched from story to story, they could see what was previously
+entered. A while back I chose to clear the entries whenever the user chose a
+different story, but never took the time to simplify the entries. (Real life
+example of technical debt!) By replacing this a single array updated as the
+story is chosen, I should be able to simplify how the words are populated too,
+as the story index is no longer necessary at the entry level.
+
 ---
 
 I will update this README as I continue.
