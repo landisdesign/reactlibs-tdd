@@ -1,8 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-
-import { LOAD_CONFIG, loadConfig, LOAD_STORIES, loadStories, LOAD_WORD, loadWord, RECONCILE_CONFIG, reconcileConfig, APPLICATION_READY, applicationReady, fetchConfig, ConfigAction } from "./actions";
+import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "./actions";
 import { WordList } from "./state";
 import { AnyAction } from 'redux';
 import { sleep } from '../../common';

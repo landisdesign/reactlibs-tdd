@@ -1,7 +1,6 @@
-import { ConfigState, ConfigUrls, Word, WordSource } from "./state";
-import { ConfigAction, LOAD_CONFIG, LoadWordAction, LOAD_WORD } from "./actions";
+import { ConfigState, ConfigUrls, WordSource } from "./state";
+import { ConfigAction, LOAD_CONFIG, LOAD_WORD } from "./actions";
 import { DEFAULT_ACTION_TYPE, StateConverter } from "..";
-import { assign } from "../../common";
 
 export function config(state: ConfigState = initialState, action: ConfigAction): ConfigState {
     const convertState = stateConverters[action.type] ?? stateConverters[DEFAULT_ACTION_TYPE];
