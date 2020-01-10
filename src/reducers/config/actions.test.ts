@@ -122,7 +122,11 @@ describe('fetchConfig retrieves config and dispatches', () => {
     const middlewares = [thunk];
     const mockStore = configureMockStore(middlewares);
 
-    const responsesData: {[index:string]: string} = {
+    interface StringMap {
+        [index:string]: string
+    }
+
+    const responsesData: StringMap = {
         'config.json': '{ "storySource": "stories.json", "wordSources": ["wordA.json", "wordB.json"] }',
         'stories.json': '[{ "id": "story-a", "title": "Story A", "fields": ["wordA", "wordB"], "template": "Template A" }]',
         'wordA.json': '{ "id": "wordA", "title": "Word A", "words": ["A1", "A2"] }',
@@ -139,21 +143,21 @@ describe('fetchConfig retrieves config and dispatches', () => {
         reconcileConfig()
     ];
 
-    const getResponse = async (req: Request) => {
+    const getResponse = (responseValues: StringMap) => async (req: Request) => {
         const urlMatch = /([^/]+\.json)$/.exec(req.url);
-        const responseData = urlMatch && responsesData[urlMatch[1]];
+        const responseData = urlMatch && responseValues[urlMatch[1]];
         await sleep(250);
         return responseData ?? Promise.reject(new Error(`Url ${req.url} not found`));
     };
 
     beforeEach(() => {
         global.fetch.resetMocks();
-        global.fetch.mockResponse(getResponse);
+        global.fetch.mockResponse(getResponse(responsesData));
     });
 
-    test('fetches URLs and dispatches proper actions', () => {
+    test('fetches URLs and dispatches proper actions', async () => {
         const store = mockStore({});
-        return store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction) // applying thunk doesn't apply ThunkAction union in mock
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction) // applying thunk doesn't apply ThunkAction union in mock
             .then(() => {
                 const actions = store.getActions();
                 expect(actions[0]).toEqual(expectedStartAction);
@@ -163,17 +167,88 @@ describe('fetchConfig retrieves config and dispatches', () => {
         ;
     });
 
-    test('delays reconciliation for at least as long as minDelay', () => {
+    test('delays reconciliation for at least as long as minDelay', async () => {
         const store = mockStore({});
         const delay = 1000;
         const now = Date.now();
         const expectedTime = now + delay;
         const slush = 10;
-        return store.dispatch((fetchConfig('config.json', delay) as unknown) as AnyAction) // applying thunk doesn't apply ThunkAction union in mock
+        await store.dispatch((fetchConfig('config.json', delay) as unknown) as AnyAction)
             .then(() => {
                 const end = Date.now();
                 const timeFromExpected = Math.abs(end - expectedTime);
                 expect(timeFromExpected).toBeLessThanOrEqual(slush);
+            })
+        ;
+    });
+
+    test('Errors on bad config JSON', async () => {
+        const badResponses = {
+            ...responsesData,
+            'config.json': '{ "storySources": "stories.json", "wordSources": ["wordA.json", "wordB.json"] }' // storySource misspelled
+        };
+
+        global.fetch.resetMocks();
+        global.fetch.mockResponse(getResponse(badResponses));
+
+        const store = mockStore({});
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
+            .then(() => {
+                const actions = store.getActions();
+                expect(actions[0].error).toEqual(true);
+            })
+        ;
+    });
+
+    test('Errors on bad story JSON', async () => {
+        const badResponses = {
+            ...responsesData,
+            'stories.json': '[{ "id": "story-a", "title": "Story A", "fields": ["wordA", "wordB"], "template": "Template A" ' // missing closing bracket/brace
+        };
+
+        global.fetch.resetMocks();
+        global.fetch.mockResponse(getResponse(badResponses));
+
+        const store = mockStore({});
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
+            .then(() => {
+                store.getActions().forEach(action => {
+                    if (action.type === LOAD_STORIES) {
+                        expect(action.error).toBe(true);
+                    }
+                    else {
+                        expect(action.error).toBeUndefined();
+                    }
+                });
+            })
+        ;
+    });
+
+    test('Errors on bad word JSON', async () => {
+        const badResponses = {
+            ...responsesData,
+            'wordA.json': '{ "id": "wordA", "title": "Word A", "ref": ["A1", "A2"] }', // invalid ref, should be string
+        };
+
+        global.fetch.resetMocks();
+        global.fetch.mockResponse(getResponse(badResponses));
+
+        const store = mockStore({});
+        await store.dispatch((fetchConfig('config.json', 0) as unknown) as AnyAction)
+            .then(() => {
+                store.getActions().forEach(action => {
+                    if (action.type === LOAD_WORD) {
+                        if (action.payload.index === 1) {
+                            expect(action.error).toBeUndefined();
+                        }
+                        else {
+                            expect(action.error).toBe(true);
+                        }
+                    }
+                    else {
+                        expect(action.error).toBeUndefined();
+                    }
+                });
             })
         ;
     });
