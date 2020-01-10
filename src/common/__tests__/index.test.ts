@@ -1,4 +1,4 @@
-import * as Common from './index';
+import * as Common from '../index';
 
 describe('arraysEqual', () => {
     test('simple comparison', () => {

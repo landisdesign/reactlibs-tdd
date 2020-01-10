@@ -1,7 +1,6 @@
-import { ConfigState, ConfigUrls, WordRef, WordList, Story, StoryList } from "./state";
-import { ConfigAction, loadConfig, loadWord, loadStories, reconcileConfig, applicationReady } from "./actions";
-import { config } from ".";
-import { BaseAction } from "..";
+import { ConfigState, ConfigUrls, WordRef, WordList, Story, StoryList } from "../state";
+import { ConfigAction, loadConfig, loadWord, loadStories, reconcileConfig, applicationReady } from "../actions";
+import { config } from "..";
 
 const initialState: ConfigState = {
     loaded: false,

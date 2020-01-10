@@ -1,10 +1,10 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "./actions";
-import { WordList } from "./state";
+import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "../actions";
+import { WordList } from "../state";
 import { AnyAction } from 'redux';
-import { sleep } from '../../common';
+import { sleep } from '../../../common';
 
 describe('Base action creators deliver valid payloads', () => {
     test('loadConfig', () => {
