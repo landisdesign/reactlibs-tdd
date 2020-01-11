@@ -9,7 +9,7 @@ export interface StateConverterMap<S, A extends BaseAction> {
 }
 
 export interface Reducer<S, A extends BaseAction> {
-    (state: S, action: A): S;
+    (state: S | undefined, action: A): S;
 }
 
 export const createReducer = <S, A extends BaseAction>(
@@ -18,7 +18,7 @@ export const createReducer = <S, A extends BaseAction>(
     converters: StateConverterMap<S,A>
 ): Reducer<S,A> =>
 
-    (state: S | undefined = initialState, action: A): S => {
+    (state: S = initialState, action: A): S => {
         const converter = converters[action.type];
         if (converter) {
             if (action.error) {
