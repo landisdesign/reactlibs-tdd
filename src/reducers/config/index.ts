@@ -1,32 +1,6 @@
-import { ConfigState, ConfigUrls, WordSource, Story } from "./state";
+import { ConfigState, ConfigUrls, WordSource, Story, StorySource } from "./state";
 import { ConfigAction, LOAD_CONFIG, LOAD_WORD, LOAD_STORIES, RECONCILE_CONFIG, APPLICATION_READY } from "./actions";
-import { StateConverter } from "..";
-
-export function config(state: ConfigState = initialState, action: ConfigAction): ConfigState {
-    const convertState = stateConverters[action.type];
-    if (convertState) {
-        if (action.error) {
-            return {
-                ...cloneState(state),
-                error: action.payload
-            };
-        }
-        else {
-            return convertState(state, action);
-        }
-    }
-    else {
-        return state;
-    }
-}
-
-const stateConverters: {[index:string]: StateConverter<ConfigState, ConfigAction>} = {
-    [LOAD_CONFIG]: convertLoadConfig,
-    [LOAD_WORD]: convertLoadWord,
-    [LOAD_STORIES]: convertLoadStory,
-    [RECONCILE_CONFIG]: convertReconcileConfig,
-    [APPLICATION_READY]: convertApplicationReady
-};
+import { StateConverterMap, createReducer } from "..";
 
 const initialState: ConfigState = {
     loaded: false,
@@ -36,7 +10,36 @@ const initialState: ConfigState = {
         loaded: false
     },
     wordSources: []
-}
+};
+
+const cloneState = (state: ConfigState): ConfigState => {
+    const wordSources: WordSource[] = state.wordSources.map(
+        word => 'words' in word ? {...word, words: [...word.words]} : { ...word }
+    );
+
+    const storySource: StorySource = 'stories' in state.storySource
+        ? { ...state.storySource, stories: state.storySource.stories.map(
+                story => ({...story, fields: [...story.fields]})
+            )}
+        : { ...state.storySource }
+    ;
+
+    return {
+        ...state,
+        wordSources,
+        storySource
+    };
+};
+
+const stateConverters: StateConverterMap<ConfigState, ConfigAction> = {
+    [LOAD_CONFIG]: convertLoadConfig,
+    [LOAD_WORD]: convertLoadWord,
+    [LOAD_STORIES]: convertLoadStory,
+    [RECONCILE_CONFIG]: convertReconcileConfig,
+    [APPLICATION_READY]: convertApplicationReady
+};
+
+export const config = createReducer(initialState, cloneState, stateConverters);
 
 function convertLoadConfig(state: ConfigState, action: ConfigAction) {
 
@@ -76,7 +79,7 @@ function convertLoadWord(state: ConfigState, action: ConfigAction) {
     }
 
     const wordAdditions = 'words' in word ? { loaded: true, words: [...word.words] } : { loaded: true};
-    const wordSources:WordSource[] = [...state.wordSources];
+    let wordSources:WordSource[] = [...state.wordSources];
     wordSources[index] = {...word, ...wordAdditions};
 
     return {
@@ -110,9 +113,3 @@ function convertApplicationReady(state: ConfigState) {
         loading: false
     };
 }
-
-const cloneState = (state: ConfigState): ConfigState => ({
-    ...state,
-    storySource: {...state.storySource},
-    wordSources: state.wordSources.map(word => ({...word}))
-});
