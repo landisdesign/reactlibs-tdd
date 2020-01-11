@@ -21,7 +21,7 @@ test('Entry is properly set', () => {
     const action = setEntry('foo', 2);
     const actual = entries(initial, action);
 
-    expect(actual).toEqual(expect);
+    expect(actual).toEqual(expected);
     expect(actual).not.toBe(initial);
 });
 
