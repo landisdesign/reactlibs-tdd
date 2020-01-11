@@ -69,7 +69,7 @@ test('Initial state returned when no state provided', () => {
     const reducer = createReducer(initialState, cloneState, converterMap);
     const action = {type: 'FOO'};
 
-    const actual = reducer(<unknown>undefined as TestState, action as TestAction);
+    const actual = reducer(undefined, action as TestAction);
 
     expect(actual).toBe(initialState);
 });
