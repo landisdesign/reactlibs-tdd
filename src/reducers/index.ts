@@ -18,7 +18,7 @@ export const createReducer = <S, A extends BaseAction>(
     converters: StateConverterMap<S,A>
 ): Reducer<S,A> =>
 
-    (state: S = initialState, action: A): S => {
+    (state: S | undefined = initialState, action: A): S => {
         const converter = converters[action.type];
         if (converter) {
             if (action.error) {
