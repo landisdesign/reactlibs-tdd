@@ -1,5 +1,5 @@
 import { WordList, WordRef } from "../config/state";
-import { StateConverterMap, createReducer } from "..";
+import { StateConverterMap, createReducer } from "../create";
 import { WordsAction, INIT_WORDS, InitWordsAction } from "./actions";
 
 interface WordsMap {

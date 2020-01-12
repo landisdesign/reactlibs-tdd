@@ -1,4 +1,4 @@
-import { StateConverterMap, createReducer, StateConverter } from "..";
+import { StateConverterMap, createReducer, StateConverter } from "../create";
 import { SET_RANDOM, SET_STORY_INDEX, SET_SHOW_STORY, SET_OUTPUT, SET_WILL_CLEAR, SET_SHOW_EMAIL, UIAction, SetRandomAction, SetShowEMailAction, SetStoryIndexAction, SetShowStoryAction, SetOutputAction, SetWillClearAction } from "./actions";
 
 export interface UIState {
