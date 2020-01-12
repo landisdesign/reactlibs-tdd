@@ -2,13 +2,13 @@ import { StateConverterMap, createReducer, StateConverter } from "..";
 import { SET_RANDOM, SET_STORY_INDEX, SET_SHOW_STORY, SET_OUTPUT, SET_WILL_CLEAR, SET_SHOW_EMAIL, UIAction, SetRandomAction, SetShowEMailAction, SetStoryIndexAction, SetShowStoryAction, SetOutputAction, SetWillClearAction } from "./actions";
 
 export interface UIState {
-    isRandom: boolean;
-    storyIndex: number;
-    showStory: boolean;
-    output: string;
-    showEMail: boolean;
-    transitionEMail: boolean;
-    willClear: boolean;
+    readonly isRandom: boolean;
+    readonly storyIndex: number;
+    readonly showStory: boolean;
+    readonly output: string;
+    readonly showEMail: boolean;
+    readonly transitionEMail: boolean;
+    readonly willClear: boolean;
 }
 
 const initialState: UIState = {
