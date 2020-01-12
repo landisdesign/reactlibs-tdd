@@ -33,3 +33,36 @@ export interface SetShowEMailAction extends BaseAction {
 export type SetWillClearAction = BooleanPayloadAction;
 
 export type UIAction = SetRandomAction | SetStoryIndexAction | SetShowStoryAction | SetOutputAction | SetShowEMailAction | SetWillClearAction;
+
+export const setRandom = (isRandom: boolean): SetRandomAction => ({
+    type: SET_RANDOM,
+    payload: isRandom
+});
+
+export const setStoryIndex = (index: number): SetStoryIndexAction => ({
+    type: SET_STORY_INDEX,
+    payload: index
+});
+
+export const setShowStory = (setShow: boolean): SetShowStoryAction => ({
+    type: SET_SHOW_STORY,
+    payload: setShow
+});
+
+export const setOutput = (output: string): SetOutputAction => ({
+    type: SET_OUTPUT,
+    payload: output
+});
+
+export const setShowEMail = (showEMail: boolean, isTransitioning: boolean): SetShowEMailAction => ({
+    type: SET_SHOW_EMAIL,
+    payload: {
+        showEMail,
+        isTransitioning
+    }
+});
+
+export const setWillClear = (willClear: boolean): SetWillClearAction => ({
+    type: SET_WILL_CLEAR,
+    payload: willClear
+});
