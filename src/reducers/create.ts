@@ -12,13 +12,12 @@ export interface Reducer<S, A extends BaseAction> {
     (state: S | undefined, action: A): S;
 }
 
-export function createReducer<S, A extends BaseAction>(
+export const createReducer = <S, A extends BaseAction>(
     initialState: S,
     cloneState: (state: S) => S,
     converters: StateConverterMap<S,A>
-): Reducer<S,A> {
-
-    return (state: S = initialState, action: A): S => {
+): Reducer<S,A> =>
+    (state: S = initialState, action: A): S => {
         const converter = converters[action.type];
         if (converter) {
             if (action.error) {
@@ -35,4 +34,4 @@ export function createReducer<S, A extends BaseAction>(
             return state;
         }
     }
-};
+;

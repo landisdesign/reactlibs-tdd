@@ -1,47 +1,20 @@
+import { combineReducers } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { config } from './config';
+import { entries } from './entries';
+import { stories } from './stories';
+import { ui } from './ui';
+import { words } from './words';
 
-export interface StateConverter<S, A extends BaseAction> {
-    (source: S, action: A): S;
-}
+export const index = combineReducers({
+    config,
+    entries,
+    stories,
+    ui,
+    words
+});
 
-export interface StateConverterMap<S, A extends BaseAction> {
-    [index: string]: StateConverter<S, A>;
-}
-
-export interface Reducer<S, A extends BaseAction> {
-    (state: S | undefined, action: A): S;
-}
-
-export const createReducer = <S, A extends BaseAction>(
-    initialState: S,
-    cloneState: (state: S) => S,
-    converters: StateConverterMap<S,A>
-): Reducer<S,A> =>
-
-    (state: S = initialState, action: A): S => {
-        const converter = converters[action.type];
-        if (converter) {
-            if (action.error) {
-                return {
-                    ...cloneState(state),
-                    error: action.payload
-                };
-            }
-            else {
-                return converter(state, action);
-            }
-        }
-        else {
-            return state;
-        }
-    }
-;
-
-export const DEFAULT_ACTION_TYPE = '__default__';
-
-export interface ReduxState {
-
-}
+export type ReduxState = ReturnType<typeof index>;
 
 export interface BaseAction {
     type: string;
