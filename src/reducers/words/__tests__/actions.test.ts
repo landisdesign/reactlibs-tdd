@@ -4,7 +4,7 @@ import { WordList } from "../../config/state";
 test('InitWordsAction created properly', () => {
     const expected: InitWordsAction = {
         type: INIT_WORDS,
-        words: [
+        payload: [
             {
                 id: 'a',
                 title: 'A',
@@ -20,9 +20,9 @@ test('InitWordsAction created properly', () => {
         ]
     };
 
-    const actual = initWords(expected.words);
+    const actual = initWords(expected.payload);
 
     expect(actual).toEqual(expected);
-    expect(actual.words).not.toBe(expected.words);
-    expect((actual.words[1] as WordList).words).not.toBe((expected.words[1] as WordList).words);
+    expect(actual.payload).not.toBe(expected.payload);
+    expect((actual.payload[1] as WordList).words).not.toBe((expected.payload[1] as WordList).words);
 })
