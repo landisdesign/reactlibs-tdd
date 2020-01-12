@@ -23,6 +23,33 @@ attempted to create concrete clases from the state interfaces. This time I
 stayed away from this, making the modifications to the state literal as needed
 in the reducers themselves.
 
+#### DRY'ing Redux
+
+I tend to be a fanatic for making my code DRY. The balance between reuse and
+complexity can be a challenge to maintain. I find that DRY only works in small,
+bite-sized units. Creating helper functions instead of frameworks. As I was
+writing this code, Dan Abramov
+[wrote a blog](https://overreacted.io/goodbye-clean-code/) discussing the
+challenges with DRY'ing, and it felt right.
+
+So, when I approach DRY'ing, I look for ways to keep the pieces small. Some
+things, such as the error handling
+[desribed below](#streamlining-and-adding-error-handling-to-fetchConfig), have
+such large blocks of repetition it begs for a large, thought-out method of code
+management. The balance there lies between making the code flexible enough to
+manage a variety of cases, and making it too complex to understand without seven
+cups of coffee and an isolation tank.
+
+But most circumstances end up with small, 5-or-10-line functions that _can_ be
+used, but don't have to be. The route I negotiate to avoid Dan's dilemma is
+aiming to make functions that plug into the existing code. The general cases can
+take advantage of the refactor, but don't have to.
+
+In a team environment, of course, none of this makes sense without checking who
+might be impacted by the change. Prior contributors and testers need to vet my
+thoughts before I start changing their code and adding to the testing
+requirements willy-nilly.
+
 #### Strategies instead of `switch`
 
 One of my favorite GoF patterns is the
