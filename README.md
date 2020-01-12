@@ -57,8 +57,8 @@ One of my favorite GoF patterns is the
 at typical reducer functionality, it involves choosing an algorithm
 dependent upon the incoming action type, and using that algorithm to create a
 new instance of the state based upon the action's payload. Frequently this
-appears as a collection of statements in cases associated with the action type,
-but this is exactly what the Strategy pattern is designed for.
+appears as a collection of statements in `switch` cases associated with the
+action type, but this is exactly what the Strategy pattern is designed for.
 
 In my previous iterations of this application, I chose to follow the standards
 presented in most tutorials. This time, I chose to build my reducer using an
