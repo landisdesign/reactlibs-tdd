@@ -1,5 +1,6 @@
-import Button from '.';
+import React from 'react';
 import { shallow } from "enzyme";
+import Button from '.';
 
 test('Standard <button> attributes passed through', () => {
     const testClick = jest.fn();
