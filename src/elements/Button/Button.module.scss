@@ -1,0 +1,63 @@
+@import '../../common/_variables';
+
+@media #{$media-desktop} {
+	.button,
+	.default {
+		font: $font-weight-bold map-get($font-size-small, "desktop") $font-sans-serif;
+	}
+}
+
+@media #{$media-not-desktop} {
+	.button,
+	.default {
+		font: $font-weight-bold map-get($font-size-small, "tablet") $font-sans-serif;
+		height: 2rem;
+	}
+}
+
+%button-common {
+	border: 1px solid $color-accent-medium;
+	border-radius: .25rem;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.button {
+	@extend %button-common;
+	background: linear-gradient(to bottom, $color-canvas 5%, #EEE 10%, #BBB 90%, #888 100%);
+
+	&:hover {
+		background: #DDD;
+	}
+
+	&:active {
+		background: linear-gradient(to bottom, #888 0%, #EEE 10%, #BBB 90%, $color-canvas 100%);
+	}
+
+	&[disabled] {
+		border: 1px solid #CCC;
+		background: #EEE;
+		color: #666;
+		cursor: arrow;
+	}
+}
+
+.default {
+	@extend %button-common;
+	background: linear-gradient(to bottom, $color-canvas 5%, $color-accent-pale 10%, mix($color-accent-dark, $color-accent-pale, 40%) 90%, $color-accent-dark 100%);
+
+	&:hover {
+		background: mix($color-accent-dark, $color-accent-pale, 10%);
+	}
+
+	&:active {
+		background: linear-gradient(to bottom, $color-accent-dark 0%, $color-accent-pale 10%, mix($color-accent-dark, $color-accent-pale, 40%) 90%, $color-canvas 100%);
+	}
+
+	&[disabled] {
+		border: 1px solid #CCC;
+		background: #DDD;
+		color: #666;
+		cursor: arrow;
+	}
+}
