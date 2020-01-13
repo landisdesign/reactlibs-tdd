@@ -117,6 +117,19 @@ async function createDelay(delay: number) {
     await sleep(delay);
 }
 
+/**
+ * Return the properly formed object represented by the JSON found at the
+ * provided URL. If the JSON is malformed or unavailable, or the JSON doesn't
+ * pass structural validation to verify it matches the requested type, this
+ * function throws a Redux action, to be dispatched by the calling function.
+ *
+ * @param url The URL to retrieve the object's JSON representation
+ * @param structureChecker The function to ensure the JSON matches the expected
+ *        object's type structure
+ * @param actionTemplate A representation of the action to be fired in case of
+ *        an error
+ * @throws The error action to be dispatched instead of the expected action
+ */
 async function fetchData<T>(url: string, structureChecker: StructureValidator, actionTemplate: BaseAction): Promise<T> {
 
     let response;
@@ -202,7 +215,20 @@ const getStoryStructureErrors: StructureValidator = (incomingArray: any) => {
     return getObjectStructureErrors('Story[]', '', validStoryStructure, incomingArray);
 }
 
-function getObjectStructureErrors<T>(objectName: string, keyName: string, validStructure: T, incomingObject: any): string | undefined {
+/**
+ * Compare an incoming value with a valid representation of a type. If a
+ * mismatch is found in any part of the invoming value, text is returned
+ * describing the error.
+ *
+ * @param objectName Used to provide debugging information
+ * @param keyName Used to identify the current member of `incomingObject`, or
+ *        `''` if we're at the root level of the object
+ * @param validStructure A representative object that fulfills the type contract
+ * @param incomingObject The object to inspect
+ * @returns A string containing the error message, or `undefined` if no error
+ *          was found
+ */
+function getObjectStructureErrors<T>(objectName: string, keyName: string = '', validStructure: T, incomingObject: any): string | undefined {
 
     type Key<T> = keyof T;
 

@@ -34,6 +34,13 @@ const converters: StateConverterMap<UIState, UIAction> = {
 
 export const ui = createReducer(initialState, cloneState, converters);
 
+/**
+ * Creates a StateConverter that places the action's payload into the provided
+ * property
+ * @param propertyName The name of the field to be updated in the cloned state
+ * @returns A StateConverter to clone the state and update the identified
+ *          property from the action's payload
+ */
 function createSinglePropertyConverter<T extends UIAction>(propertyName: keyof UIState): StateConverter<UIState, UIAction> {
     return (state: UIState, action: UIAction): UIState => {
         return {
