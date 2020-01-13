@@ -2,26 +2,18 @@ import React from "react";
 import styles from './Button.module.scss';
 
 /**
- * Properties for Button
+ * Properties for Button, in addition to those available to HTMLButtonElement
  *
- *  @property type If present, overrides the default `button` type
- *  @property disabled If present and not false or 'false', disables the button
  *  @property isDefault Indicate this the default button in a list of buttons
- *  @property onClick Event handler for `click` event.
  *  @property render If provided, overrides `children` as the content for the button
- *  @property style If provided, additional styling for the button
- *  @property className if provided, additional classes to add to the button
+ *  @property className if provided, overrides default styling
  */
 export interface ButtonProps {
-    type?: 'button' | 'submit';
-    disabled?: boolean | string;
-    isDefault: boolean;
-    onClick?: React.MouseEventHandler;
+    isDefault?: boolean;
     render?: () => React.ReactNode;
-    style?: React.CSSProperties;
-    className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = (props) => {
+const Button: React.FC<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
     return null;
 }
+export default Button;
