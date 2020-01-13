@@ -14,6 +14,15 @@ export interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-    return null;
+    const {
+        isDefault = false,
+        className = styles[isDefault ? 'default' : 'button'],
+        render,
+        children,
+        ...passedProps
+    } = props;
+
+    return <button className={className} {...passedProps}>{ render ? render() : children}</button>;
 }
+
 export default Button;
