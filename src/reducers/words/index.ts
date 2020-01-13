@@ -61,13 +61,10 @@ function convertInitWords(state: WordsState, action: WordsAction): WordsState {
         lists[newWord.id] = newWord;
     }
 
-    let newState: {words: WordsMap, error?: string} = {
-        words: lists
+    const errorProp = error ? {error} : {};
+
+    return {
+        words: lists,
+        ...errorProp
     };
-
-    if (error) {
-        newState.error = error;
-    }
-
-    return newState;
 }
