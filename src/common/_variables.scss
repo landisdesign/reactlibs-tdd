@@ -1,0 +1,38 @@
+$em-size: 16;
+$small-breakpoint: 480rem / $em-size;
+$large-breakpoint: 768rem / $em-size;
+$max-breakpoint: 960rem / $em-size;
+
+// I specify styles for each breakpoint individually instead of Mobile First.
+// Even though I design Mobile First, individual styles at each breakpoint keeps
+// me from having to track cascade issues across media.
+$media-phone: "(min-width:0) and (max-width:" + $small-breakpoint + ")";
+$media-tablet: "(min-width:" + ($small-breakpoint + 0.01) + ") and (max-width: " + $large-breakpoint + ")";
+$media-desktop: "(min-width:" + ($large-breakpoint + 0.01) + ")";
+$media-not-phone: "(min-width:" + ($small-breakpoint + 0.01) + ")";
+$media-not-desktop: "(max-width:" + $large-breakpoint + ")";
+
+$font-serif: "mandrel-normal", serif;
+$font-sans-serif: "mr-eaves-modern", sans-serif;
+
+$font-size-title: ("desktop": 3rem, "tablet": 2rem, "phone": 1.5rem);
+$font-size-header: ("desktop": 2rem, "tablet": 1.5rem, "phone": 1rem);
+$font-size-subhead: ("desktop": 1.5rem, "tablet": 1rem, "phone": 1rem);
+$font-size-normal: ("desktop": 1.5rem, "tablet": 1rem, "phone": 1rem);
+$font-size-small: ("desktop": 1.25rem, "tablet": .85rem, "phone": .85rem);
+
+$line-height: 1.5;
+
+$font-weight-bold: 900;
+$font-weight-semibold: 700;
+$font-weight-normal: 500;
+$font-weight-light: 100;
+
+$color-canvas: #FFF;
+$color-text: #246;
+$color-accent-dark: #356;
+$color-accent-medium: #689;
+$color-accent-light: #9AC;
+$color-accent-pale: #DEF;
+$color-highlight: #F60;
+$color-active: #C00;
