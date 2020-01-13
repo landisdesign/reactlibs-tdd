@@ -1,0 +1,20 @@
+@import '../../common/_variables';
+
+.copyright {
+	padding: 1rem;
+	color: $color-text;
+	font: 1rem/$line-height $font-sans-serif;
+	text-align: center;
+}
+
+@media #{$media-desktop} {
+	.copyright {
+		font-size: map-get($font-size-small, "desktop");
+	}
+}
+
+@media #{$media-not-desktop} {
+	.copyright {
+		font-size: map-get($font-size-small, "phone");
+	}
+}
