@@ -32,7 +32,7 @@ export interface Story {
 }
 
 export type Word = WordJSON & {
-    loaded: boolean;
+    readonly loaded: boolean;
 }
 
 export type WordJSON = WordRef | WordList;
