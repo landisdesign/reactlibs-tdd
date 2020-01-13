@@ -22,6 +22,4 @@ test('InitStoriesAction properly built', () => {
     const actual = initStories(expected.payload);
 
     expect(actual).toEqual(expected);
-    expect(actual.payload).not.toBe(expected.payload);
-    actual.payload.forEach((story, i) => expect(story).not.toBe(expected.payload[i]));
 });

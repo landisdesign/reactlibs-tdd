@@ -11,5 +11,5 @@ export type WordsAction = InitWordsAction; // Maintain pattern used by multi-act
 
 export const initWords = (words: WordJSON[]): InitWordsAction => ({
     type: INIT_WORDS,
-    payload: words.map(word => 'ref' in word ? {...word} : {...word, words: [...word.words]})
+    payload: words
 });

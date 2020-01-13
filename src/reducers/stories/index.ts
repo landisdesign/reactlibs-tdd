@@ -33,11 +33,9 @@ const converters:StateConverterMap<StoriesState, StoriesAction> = {
 export const stories = createReducer(initialState, cloneState, converters);
 
 function convertInitStories(state: StoriesState, action: StoriesAction): StoriesState {
-    const newState: MutableStoriesState = action.payload.reduce((mutableState, story, index) => {
+    return action.payload.reduce((mutableState, story, index) => {
         mutableState.idMap[story.id] = index;
-        mutableState.stories[index] = {...story, fields: [...story.fields]};
+        mutableState.stories[index] = story;
         return mutableState;
     }, ({idMap:{}, stories: new Array(action.payload.length)} as MutableStoriesState));
-
-    return newState;
 }

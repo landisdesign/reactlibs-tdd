@@ -33,27 +33,19 @@ export const loadConfig = (config: ConfigUrls): LoadConfigAction => ({
     type: LOAD_CONFIG,
     payload: {
         storySource: config.storySource,
-        wordSources: [...config.wordSources]
+        wordSources: config.wordSources
     }
 });
 
 export const loadStories = (stories: Story[]): LoadStoriesAction => ({
     type: LOAD_STORIES,
-    payload: stories.map(story => ({
-        ...story,
-        fields: [...story.fields]
-    }))
+    payload: stories
 });
 
 export const loadWord = (word: WordJSON, index: number): LoadWordAction => ({
     type: LOAD_WORD,
     payload: {
-        word: 'words' in word
-            ? {
-                ...word,
-                words: [...word.words]
-            }
-            : { ...word },
+        word,
         index
     }
 });

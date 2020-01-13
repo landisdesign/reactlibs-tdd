@@ -12,24 +12,7 @@ const initialState: ConfigState = {
     wordSources: []
 };
 
-const cloneState = (state: ConfigState): ConfigState => {
-    const wordSources: WordSource[] = state.wordSources.map(
-        word => 'words' in word ? {...word, words: [...word.words]} : { ...word }
-    );
-
-    const storySource: StorySource = 'stories' in state.storySource
-        ? { ...state.storySource, stories: state.storySource.stories.map(
-                story => ({...story, fields: [...story.fields]})
-            )}
-        : { ...state.storySource }
-    ;
-
-    return {
-        ...state,
-        wordSources,
-        storySource
-    };
-};
+const cloneState = (state: ConfigState): ConfigState => ({...state})
 
 const stateConverters: StateConverterMap<ConfigState, ConfigAction> = {
     [LOAD_CONFIG]: convertLoadConfig,
@@ -67,23 +50,22 @@ function convertLoadWord(state: ConfigState, action: ConfigAction) {
 
     if (index < 0) {
         return {
-            ...cloneState(state),
+            ...state,
             error: `${index} < 0; cannot load word ${word.title}`
         };
     }
     if (index >= state.wordSources.length) {
         return {
-            ...cloneState(state),
+            ...state,
             error: `${index} > ${state.wordSources.length - 1}; cannot load word ${word.title}`
         };
     }
 
-    const wordAdditions = 'words' in word ? { loaded: true, words: [...word.words] } : { loaded: true};
     let wordSources:WordSource[] = [...state.wordSources];
-    wordSources[index] = {...word, ...wordAdditions};
+    wordSources[index] = {...word, loaded: true};
 
     return {
-        ...cloneState(state),
+        ...state,
         wordSources
     };
 }
@@ -92,24 +74,24 @@ function convertLoadStory(state: ConfigState, action: ConfigAction) {
 
     const stories: Story[] = action.payload;
     return {
-        ...cloneState(state),
+        ...state,
         storySource: {
             loaded: true,
-            stories: stories.map(story => ({...story, fields: [...story.fields]}))
+            stories
         }
     };
 }
 
 function convertReconcileConfig(state: ConfigState) {
     return {
-        ...cloneState(state),
+        ...state,
         loaded: true
     };
 }
 
 function convertApplicationReady(state: ConfigState) {
     return {
-        ...cloneState(state),
+        ...state,
         loading: false
     };
 }

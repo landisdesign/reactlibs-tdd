@@ -60,10 +60,6 @@ test('Words properly loaded and refs replaced by lists', () => {
     const actual = words({words:{}}, action);
 
     expect(actual).toEqual(expected);
-    testWords.forEach(word => {
-        expect(actual.words[word.id]).not.toBe(word);
-        expect(actual.words[word.id]).not.toBe((testWords[1] as WordList).words);
-    });
 });
 
 test('Faulty word setups error properly', () => {

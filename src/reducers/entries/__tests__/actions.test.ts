@@ -24,7 +24,6 @@ test('All entries provided', () => {
     const actual = setEntries(expected.payload);
 
     expect(actual).toEqual(expected);
-    expect(actual.payload).not.toBe(expected.payload);
 });
 
 test('All entries cleared', () => {

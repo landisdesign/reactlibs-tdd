@@ -22,8 +22,6 @@ describe('Base action creators deliver valid payloads', () => {
         const actual = loadConfig(expected.payload);
 
         expect(actual).toEqual(expected);
-        expect(actual.payload).not.toBe(expected.payload);
-        expect(actual.payload.wordSources).not.toBe(expected.payload.wordSources);
     });
 
     test('loadStories', () => {
@@ -48,10 +46,6 @@ describe('Base action creators deliver valid payloads', () => {
         const actual = loadStories(expected.payload);
 
         expect(actual).toEqual(expected);
-        expect(actual.payload).not.toBe(expected.payload);
-        actual.payload.forEach((story, i) => {
-            expect(story.fields).not.toBe(expected.payload[i].fields);
-        });
     });
 
     test('loadWord', () => {
@@ -70,10 +64,7 @@ describe('Base action creators deliver valid payloads', () => {
         };
 
         let actual = loadWord(expected1.payload.word, 1);
-
         expect(actual).toEqual(expected1);
-        expect(actual.payload.word).not.toBe(expected1.payload.word);
-        expect((actual.payload.word as WordList).words).not.toBe((expected1.payload.word as WordList).words);
 
         const expected2 = {
             type: LOAD_WORD,
@@ -90,9 +81,7 @@ describe('Base action creators deliver valid payloads', () => {
         };
 
         actual = loadWord(expected2.payload.word, 1);
-
         expect(actual).toEqual(expected2);
-        expect(actual.payload.word).not.toBe(expected2.payload.word);
     });
 
     test('reconcileConfig', () => {

@@ -13,11 +13,7 @@ export interface WordsState {
 const initialState: WordsState = {words:{}};
 
 const cloneState = (state: WordsState): WordsState => ({
-    words: Object.keys(state.words).reduce((words, id) => {
-        const word = state.words[id];
-        words[id] = {...word, words: [...word.words]};
-        return words;
-    }, {} as WordsMap),
+    words: {...state.words},
     error: state.error
 });
 
@@ -28,7 +24,7 @@ const converters: StateConverterMap<WordsState, WordsAction> = {
 export const words = createReducer(initialState, cloneState, converters);
 
 function convertInitWords(state: WordsState, action: WordsAction): WordsState {
-    let lists: WordsMap = { ...cloneState(state).words };
+    let lists: WordsMap = { ...state.words };
     let refs: WordRef[] = [];
     let error: string | null = null;
 
@@ -54,7 +50,7 @@ function convertInitWords(state: WordsState, action: WordsAction): WordsState {
 
         let newWord = {
             ...ref,
-            words: [...list.words]
+            words: list.words
         };
         delete newWord.ref;
 

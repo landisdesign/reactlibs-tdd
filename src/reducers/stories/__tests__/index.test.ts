@@ -13,7 +13,6 @@ test('Initial state returned when no state provided', () => {
     const actual = stories(undefined, bogusAction as InitStoriesAction);
 
     expect(actual).toEqual(expected);
-    expect(actual).not.toBe(expected);
 });
 
 test('Provided state passed through when bogus action provided', () => {
@@ -71,10 +70,4 @@ test('Stories properly initialized', () => {
     const actual = stories(initial, action);
 
     expect(actual).toEqual(expected);
-    expect(actual).not.toBe(expected);
-    expect(actual.stories).not.toBe(expected.stories);
-    actual.stories.forEach((story, index) => {
-        expect(story).not.toBe(expected.stories[index]);
-        expect(story.fields).not.toBe(expected.stories[index].fields);
-    });
 });

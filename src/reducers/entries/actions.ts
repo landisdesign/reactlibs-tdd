@@ -35,7 +35,7 @@ export const setEntry = (entry: string, index: number): SetEntryAction => ({
 
 export const setEntries = (entries: string[]): SetEntriesAction => ({
     type: SET_ENTRIES,
-    payload: [...entries]
+    payload: entries
 });
 
 export const clearEntries = (): ClearEntriesAction => ({

@@ -11,5 +11,5 @@ export type StoriesAction = InitStoriesAction; // maintain pattern used in other
 
 export const initStories = (stories: Story[]): InitStoriesAction => ({
     type: INIT_STORIES,
-    payload: stories.map(story => ({...story, fields: [...story.fields]}))
+    payload: stories
 });

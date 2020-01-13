@@ -55,7 +55,6 @@ test('populates config URLs on LOAD_CONFIG', () => {
         ]
     };
 
-    const priorState = cloneState(initialState);
     const loadConfigAction = loadConfig(configUrls);
 
     const expected: ConfigState = {
@@ -71,10 +70,9 @@ test('populates config URLs on LOAD_CONFIG', () => {
         }))
     };
 
-    const actual = config(priorState, loadConfigAction);
+    const actual = config(initialState, loadConfigAction);
 
     expect(actual).toEqual(expected);
-    expect(actual).not.toBe(expected);
 });
 
 test('replaces proper word config on LOAD_WORD', () => {
@@ -86,7 +84,7 @@ test('replaces proper word config on LOAD_WORD', () => {
     };
     const wordRefAction = loadWord(wordRef, 0);
     const expectedRef = {
-        ...cloneState(configgedState),
+        ...configgedState,
         wordSources: [{...wordRef, loaded: true}, configgedState.wordSources[1]]
     };
 
@@ -103,7 +101,7 @@ test('replaces proper word config on LOAD_WORD', () => {
     }
     const wordListAction = loadWord(wordList, 1);
     const expectedList = {
-        ...cloneState(expectedRef),
+        ...expectedRef,
         wordSources: [expectedRef.wordSources[0], {...wordList, loaded: true}]
     };
 
@@ -132,7 +130,7 @@ test('replaces story config on LOAD_STORIES', () => {
     ];
     const storyAction = loadStories(stories);
     const expected = {
-        ...cloneState(configgedState),
+        ...configgedState,
         storySource: {
             loaded: true,
             stories
@@ -142,14 +140,13 @@ test('replaces story config on LOAD_STORIES', () => {
     const actual = config(configgedState, storyAction);
     expect(actual).toEqual(expected);
     expect(actual).not.toBe(configgedState);
-    expect((actual.storySource as StoryList).stories).not.toBe(stories);
 });
 
 
 test('indicates state is loaded on RECONCILE_CONFIG', () => {
     const reconcile = reconcileConfig();
     const expected = {
-        ...cloneState(initialState),
+        ...initialState,
         loaded: true
     }
     const actual = config(initialState, reconcile);
@@ -161,11 +158,11 @@ test('indicates state is loaded on RECONCILE_CONFIG', () => {
 test('indicates state is finished loading on APPLICATION_READY', () => {
     const ready = applicationReady();
     const initial = {
-        ...cloneState(initialState),
+        ...initialState,
         loading: true
     }
     const expected = {
-        ...cloneState(initialState),
+        ...initialState,
         loading: false
     }
     const actual = config(initial, ready);
@@ -190,7 +187,7 @@ test('Returns error conditions from fetch-based actions', () => {
     };
 
     const expected = {
-        ...cloneState(initialState),
+        ...initialState,
         error: errorProperties.payload
     };
 

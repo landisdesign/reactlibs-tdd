@@ -28,7 +28,7 @@ function convertSetEntry(state: EntryState, action: EntryAction): EntryState {
 }
 
 function convertSetEntries(state: EntryState, action: EntryAction): EntryState {
-    return [...action.payload];
+    return action.payload;
 }
 
 function convertClearEntries(state: EntryState, action: EntryAction): EntryState {
