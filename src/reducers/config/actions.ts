@@ -1,6 +1,8 @@
 import { BaseAction, ReactlibThunkAction, ReactlibThunkDispatch } from "..";
 import { ConfigUrls, Story, WordRef, WordList, WordJSON } from "./state";
 import { sleep, arraysEqual } from "../../common";
+import { initStories } from "../stories/actions";
+import { initWords } from "../words/actions";
 
 export const LOAD_CONFIG = 'LOAD_CONFIG';
 export const LOAD_STORIES = 'LOAD_STORIES';
@@ -68,8 +70,7 @@ export const fetchConfig = (configUrl: string, minDelay: number): ReactlibThunkA
             configData = await fetchData(configUrl, getConfigStructureErrors, configErrorTemplate);
         }
         catch (e) {
-            dispatch(e);
-            return;
+            return dispatch(e);
         }
 
         dispatch(loadConfig(configData as ConfigUrls));
@@ -83,7 +84,10 @@ export const fetchConfig = (configUrl: string, minDelay: number): ReactlibThunkA
         }
 
         try {
-            await Promise.all(fetches);
+            const fetchData = await Promise.all(fetches);
+            const wordData: WordJSON[] = fetchData.slice(0, configData.wordSources.length) as WordJSON[];
+            dispatch(initWords(wordData));
+            dispatch(initStories(fetchData[configData.wordSources.length] as Story[]));
             return dispatch(reconcileConfig());
         }
         catch (error) {
@@ -96,6 +100,7 @@ async function fetchWordConfig(dispatch: ReactlibThunkDispatch, wordSource: stri
     const errorActionTemplate = loadWord({} as WordJSON, index);
     const wordData = await fetchData(wordSource, getWordStructureErrors, errorActionTemplate);
     dispatch(loadWord(wordData as WordJSON, index));
+    return wordData;
 }
 
 async function fetchStoryConfig(dispatch: ReactlibThunkDispatch, storySource: string) {
@@ -103,6 +108,7 @@ async function fetchStoryConfig(dispatch: ReactlibThunkDispatch, storySource: st
 
     const storyData = await fetchData(storySource, getStoryStructureErrors, errorActionTemplate);
     dispatch(loadStories(storyData as Story[]));
+    return storyData;
 }
 
 async function createDelay(delay: number) {

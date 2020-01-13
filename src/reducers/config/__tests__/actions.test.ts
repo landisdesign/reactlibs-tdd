@@ -2,9 +2,11 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "../actions";
-import { WordList } from "../state";
+import { WordList, WordJSON, Story } from "../state";
 import { AnyAction } from 'redux';
 import { sleep } from '../../../common';
+import { initWords } from '../../words/actions';
+import { initStories } from '../../stories/actions';
 
 describe('Base action creators deliver valid payloads', () => {
     test('loadConfig', () => {
@@ -120,14 +122,19 @@ describe('fetchConfig retrieves config and dispatches', () => {
         'wordA.json': '{ "id": "wordA", "title": "Word A", "words": ["A1", "A2"] }',
         'wordB.json': '{ "id": "wordB", "title": "Word B", "ref": "wordA", "help": "Help B" }'
     };
+    const wordA: WordJSON = JSON.parse(responsesData['wordA.json']);
+    const wordB: WordJSON = JSON.parse(responsesData['wordB.json']);
+    const stories: Story[] = JSON.parse(responsesData['stories.json']);
 
     const expectedStartAction: ConfigAction = loadConfig(JSON.parse(responsesData['config.json']));
     const expectedDataActions: ConfigAction[] = [
-        loadStories(JSON.parse(responsesData['stories.json'])),
-        loadWord(JSON.parse(responsesData['wordA.json']), 0),
-        loadWord(JSON.parse(responsesData['wordB.json']), 1)
+        loadStories(stories),
+        loadWord(wordA, 0),
+        loadWord(wordB, 1)
     ];
     const expectedEndActions: ConfigAction[] = [
+        initWords([wordA, wordB]),
+        initStories(stories),
         reconcileConfig()
     ];
 
@@ -160,7 +167,7 @@ describe('fetchConfig retrieves config and dispatches', () => {
         const actions = store.getActions();
         expect(actions[0]).toEqual(expectedStartAction);
         expect(actions.slice(1, 1 + expectedDataActions.length)).toEqual(expect.arrayContaining(expectedDataActions));
-        expect(actions[actions.length - 1]).toEqual(expectedEndActions[0]);
+        expect(actions.slice(1 + expectedDataActions.length)).toEqual(expectedEndActions);
     });
 
     test('delays reconciliation for at least as long as minDelay', async () => {
