@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HTML is output dangerously 1`] = `
+<div
+  className="default"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "<b>Hello</b>",
+    }
+  }
+/>
+`;
+
+exports[`HTML is output dangerously 2`] = `
+<div
+  className="default"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "<b>Hello</b>",
+    }
+  }
+/>
+`;
