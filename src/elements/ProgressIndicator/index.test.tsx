@@ -33,6 +33,12 @@ test('Background styled properly for current/total values', () => {
     expect(wrapper.prop('style')).toEqual(expected);
 });
 
+test('Width received', () => {
+    const expectedWidth = '75%';
+    const wrapper = shallow(<ProgressIndicator current={1} total={100} width={expectedWidth}/>);
+    expect(wrapper.prop('style').width).toEqual(expectedWidth);
+});
+
 test('Current/Total clamped properly', () => {
     let expected: React.CSSProperties = {
         background: '#369'
