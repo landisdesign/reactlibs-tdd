@@ -1,0 +1,32 @@
+@import '../../common/_variables';
+
+.story {
+	padding-right: .5rem;
+	font-family: $font-serif;
+	line-height: 2;
+}
+
+.default {
+	font-family: $font-sans-serif;
+}
+
+@media #{$media-desktop} {
+	.story,
+	.default {
+		font-size: map-get($font-size-normal, "desktop");
+	}
+}
+
+@media #{$media-tablet} {
+	.story,
+	.default {
+		font-size: map-get($font-size-normal, "tablet");
+	}
+}
+
+@media #{$media-phone} {
+	.story,
+	.default {
+		font-size: map-get($font-size-normal, "phone");
+	}
+}
