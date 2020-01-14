@@ -1,6 +1,6 @@
-import { Story } from "../config/state";
-import { StateConverterMap, createReducer } from "../create";
-import { StoriesAction, INIT_STORIES } from "./actions";
+import { Story } from '../config/state';
+import { StateConverterMap, createReducer } from '../create';
+import { StoriesAction, INIT_STORIES } from './actions';
 
 interface IDMap {
     [index: string]: number;

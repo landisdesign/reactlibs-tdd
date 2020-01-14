@@ -1,6 +1,6 @@
-import { WordList, WordRef } from "../config/state";
-import { StateConverterMap, createReducer } from "../create";
-import { WordsAction, INIT_WORDS, InitWordsAction } from "./actions";
+import { WordList, WordRef } from '../config/state';
+import { StateConverterMap, createReducer } from '../create';
+import { WordsAction, INIT_WORDS, InitWordsAction } from './actions';
 
 interface WordsMap {
     [index:string]: WordList;
@@ -44,7 +44,7 @@ function convertInitWords(state: WordsState, action: WordsAction): WordsState {
     for (const ref of refs) {
         const list = lists[ref.ref];
         if (!list) {
-            error = error || `Word "${ref.id}" references nonexistent word "${ref.ref}"`;
+            error = error || `Word '${ref.id}' references nonexistent word '${ref.ref}'`;
             continue;
         }
 

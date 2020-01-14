@@ -1,6 +1,6 @@
-import { ConfigState, ConfigUrls, WordSource, Story, StorySource } from "./state";
-import { ConfigAction, LOAD_CONFIG, LOAD_WORD, LOAD_STORIES, RECONCILE_CONFIG, APPLICATION_READY } from "./actions";
-import { StateConverterMap, createReducer } from "../create";
+import { ConfigState, ConfigUrls, WordSource, Story } from './state';
+import { ConfigAction, LOAD_CONFIG, LOAD_WORD, LOAD_STORIES, RECONCILE_CONFIG, APPLICATION_READY } from './actions';
+import { StateConverterMap, createReducer } from '../create';
 
 const initialState: ConfigState = {
     loaded: false,

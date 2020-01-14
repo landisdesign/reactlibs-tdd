@@ -1,6 +1,6 @@
-import { BaseAction } from "..";
+import { BaseAction } from '.';
 
-import { StateConverterMap, createReducer } from "../create";
+import { StateConverterMap, createReducer } from './create';
 
 interface TestState {
     foo: string;

@@ -1,5 +1,5 @@
-import { StoriesState, stories } from "..";
-import { InitStoriesAction, initStories } from "../actions";
+import { StoriesState, stories } from '.';
+import { InitStoriesAction, initStories } from './actions';
 
 test('Initial state returned when no state provided', () => {
     const expected: StoriesState = {

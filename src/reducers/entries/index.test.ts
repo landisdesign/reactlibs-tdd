@@ -1,6 +1,6 @@
-import { setEntry, setEntries, clearEntries, initEntries } from "../actions";
-import { entries } from "..";
-import { Story } from "../../config/state";
+import { setEntry, setEntries, clearEntries, initEntries } from './actions';
+import { entries } from '.';
+import { Story } from '../config/state';
 
 const empty5 = (new Array(5)).fill('');
 const filled5 = ['a', 'b', 'c', 'd', 'e'];

@@ -1,8 +1,8 @@
-import { BaseAction, ReactlibThunkAction, ReactlibThunkDispatch } from "..";
-import { ConfigUrls, Story, WordRef, WordList, WordJSON } from "./state";
-import { sleep, arraysEqual } from "../../common";
-import { initStories } from "../stories/actions";
-import { initWords } from "../words/actions";
+import { BaseAction, ReactlibThunkAction, ReactlibThunkDispatch } from '..';
+import { ConfigUrls, Story, WordRef, WordList, WordJSON } from './state';
+import { sleep, arraysEqual } from '../../common';
+import { initStories } from '../stories/actions';
+import { initWords } from '../words/actions';
 
 export const LOAD_CONFIG = 'LOAD_CONFIG';
 export const LOAD_STORIES = 'LOAD_STORIES';

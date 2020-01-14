@@ -1,4 +1,4 @@
-import { BaseAction } from ".";
+import { BaseAction } from '.';
 
 /**
  * Describes a function that returns a new copy of the state, modified according

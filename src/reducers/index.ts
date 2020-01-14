@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { combineReducers } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { config } from './config';
 import { entries } from './entries';
 import { stories } from './stories';

@@ -1,5 +1,5 @@
-import { StateConverterMap, createReducer } from "../create";
-import { EntryAction, SET_ENTRY, SET_ENTRIES, CLEAR_ENTRIES, INIT_ENTRIES } from "./actions";
+import { StateConverterMap, createReducer } from '../create';
+import { EntryAction, SET_ENTRY, SET_ENTRIES, CLEAR_ENTRIES, INIT_ENTRIES } from './actions';
 
 export type EntryState = Readonly<string[]>;
 

@@ -1,5 +1,5 @@
-import { SET_ENTRY, setEntry, SET_ENTRIES, setEntries, CLEAR_ENTRIES, clearEntries, INIT_ENTRIES, initEntries } from "../actions";
-import { Story } from "../../config/state";
+import { SET_ENTRY, setEntry, SET_ENTRIES, setEntries, CLEAR_ENTRIES, clearEntries, INIT_ENTRIES, initEntries } from './actions';
+import { Story } from '../config/state';
 
 test('Entry value transmitted for index', () => {
     const expected = {

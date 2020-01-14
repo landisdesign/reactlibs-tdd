@@ -1,12 +1,12 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "../actions";
-import { WordList, WordJSON, Story } from "../state";
+import { LOAD_CONFIG, LOAD_STORIES, LOAD_WORD, RECONCILE_CONFIG, APPLICATION_READY, loadConfig, loadStories, loadWord, reconcileConfig, applicationReady, fetchConfig, ConfigAction } from "./actions";
+import { WordJSON, Story } from "./state";
 import { AnyAction } from 'redux';
-import { sleep } from '../../../common';
-import { initWords } from '../../words/actions';
-import { initStories } from '../../stories/actions';
+import { sleep } from '../../common';
+import { initWords } from '../words/actions';
+import { initStories } from '../stories/actions';
 
 describe('Base action creators deliver valid payloads', () => {
     test('loadConfig', () => {
@@ -141,7 +141,7 @@ describe('fetchConfig retrieves config and dispatches', () => {
     const getResponse = (responseValues: StringMap) => async (req: Request) => {
         const urlMatch = /([^/]+\.json)$/.exec(req.url);
         const responseData = urlMatch && responseValues[urlMatch[1]];
-        await sleep(250);
+        await sleep(100);
         return responseData ?? Promise.reject(new Error(`Url ${req.url} not found`));
     };
 

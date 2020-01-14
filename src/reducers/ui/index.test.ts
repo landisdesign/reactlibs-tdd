@@ -1,5 +1,5 @@
-import { UIState, ui } from "..";
-import { UIAction, setRandom, setStoryIndex, setShowStory, setOutput, setShowEMail, setWillClear } from "../actions";
+import { UIState, ui } from '.';
+import { UIAction, setRandom, setStoryIndex, setShowStory, setOutput, setShowEMail, setWillClear } from './actions';
 
 const initialState: UIState = {
     isRandom: false,

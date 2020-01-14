@@ -1,6 +1,6 @@
-import { WordsState, words } from "..";
-import { WordsAction, initWords } from "../actions";
-import { WordJSON, WordList, WordRef } from "../../config/state";
+import { WordsState, words } from '.';
+import { WordsAction, initWords } from './actions';
+import { WordJSON, WordList, WordRef } from '../config/state';
 
 test('Initial state returned when no state provided', () => {
     const expected: WordsState = {words:{}};

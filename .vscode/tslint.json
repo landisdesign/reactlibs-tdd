@@ -1,0 +1,9 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "quotemark": {
+            "options": ["single", "jsx-single", "avoid-escape"],
+            "severity": "warn"
+        }
+    }
+}

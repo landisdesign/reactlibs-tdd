@@ -5,7 +5,7 @@ import {
     SetOutputAction, SET_OUTPUT, setOutput,
     SetShowEMailAction, SET_SHOW_EMAIL, setShowEMail,
     SetWillClearAction, SET_WILL_CLEAR, setWillClear
-} from "../actions";
+} from './actions';
 
 test('SetRandomAction populated', () => {
     const expected: SetRandomAction = {

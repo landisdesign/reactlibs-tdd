@@ -20,5 +20,7 @@
     "workbench.tree.indent": 16,
     "workbench.tree.renderIndentGuides": "always",
     "workbench.editor.highlightModifiedTabs": true,
-    "explorer.compactFolders": false
+    "explorer.compactFolders": false,
+    "typescript.preferences.quoteStyle": "single",
+    "editor.formatOnType": true
 }

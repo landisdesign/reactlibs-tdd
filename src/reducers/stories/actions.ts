@@ -1,5 +1,5 @@
-import { BaseAction } from "..";
-import { Story } from "../config/state";
+import { BaseAction } from '..';
+import { Story } from '../config/state';
 
 export const INIT_STORIES = 'INIT_STORIES';
 

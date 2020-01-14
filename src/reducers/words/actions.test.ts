@@ -1,4 +1,4 @@
-import { InitWordsAction, INIT_WORDS, initWords } from "../actions"
+import { InitWordsAction, INIT_WORDS, initWords } from './actions'
 
 test('InitWordsAction created properly', () => {
     const expected: InitWordsAction = {

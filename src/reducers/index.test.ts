@@ -1,14 +1,14 @@
-import { index } from "..";
-import { config } from "../config";
-import { ConfigAction } from "../config/actions";
-import { entries } from "../entries";
-import { EntryAction } from "../entries/actions";
-import { stories } from "../stories";
-import { StoriesAction } from "../stories/actions";
-import { ui } from "../ui";
-import { UIAction } from "../ui/actions";
-import { words } from "../words";
-import { WordsAction } from "../words/actions";
+import { index } from '.';
+import { config } from './config';
+import { ConfigAction } from './config/actions';
+import { entries } from './entries';
+import { EntryAction } from './entries/actions';
+import { stories } from './stories';
+import { StoriesAction } from './stories/actions';
+import { ui } from './ui';
+import { UIAction } from './ui/actions';
+import { words } from './words';
+import { WordsAction } from './words/actions';
 
 /*
  *  Combined State test. Confirms no new reducers added without reason.

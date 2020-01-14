@@ -1,5 +1,5 @@
-import { BaseAction } from "..";
-import { Story } from "../config/state";
+import { BaseAction } from '..';
+import { Story } from '../config/state';
 
 export const SET_ENTRY = 'SET_ENTRY';
 export const SET_ENTRIES = 'SET_ENTRIES';

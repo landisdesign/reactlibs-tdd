@@ -1,4 +1,4 @@
-import { BaseAction } from "..";
+import { BaseAction } from '..';
 
 export const SET_RANDOM = 'SET_RANDOM';
 export const SET_STORY_INDEX = 'SET_STORY_INDEX';
