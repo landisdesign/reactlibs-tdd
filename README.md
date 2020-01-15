@@ -105,6 +105,24 @@ example of technical debt!) By replacing this  so that a single array is updated
 as the story is chosen, I should be able to simplify how the words are populated
 too, as the story index is no longer necessary at the entry level.
 
+### Conversion from SCSS modules to styled components
+
+While I'm a big fan of SCSS, I'm seeing how
+[Styled Components](https://styled-components.com/) has taken the Reactiverse by
+storm, so I figured I should learn how to use it. I'm seeing how it is augmented
+by [`styled-theming`](https://github.com/styled-components/styled-theming) and
+that feels like an acceptable alternative. My main concern with styled
+components is the capacity to create different styling willy-nilly, but by
+creating a common set of exports in [src/common/styling](https://github.com/landisdesign/reactlibs-tdd/blob/master/src/common/styling.ts)
+I feel I'm able to keep themig elements consistent.
+
+Most of the commonalities don't require the use of a theme, simply collections
+of constants. I'm taking advantage of theming primarily with colors. I'm also
+taking advantage of a snippet in a [Medium article](https://medium.com/@rossbulat/creating-themes-in-react-with-styled-components-6fce744b4e54#29cb)
+by [Ross Bulat](https://twitter.com/rossbulat) that makes it easier to name
+media breakpoints. I extended it to take advantage of TypeScript, which was a
+bit messy, but it makes me happy to see it show up in Intellisense.
+
 ---
 
 I will update this README as I continue.
