@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './ProgressIndicator.module.scss';
+import styled, { css } from 'styled-components';
+import { colors } from '../../common/styling';
 
 /**
  * Properties for ProgressIndicator.
@@ -17,33 +18,22 @@ import styles from './ProgressIndicator.module.scss';
 export interface ProgressIndicatorProps {
     current: number;
     total: number;
-    progressColor?: string;
-    backgroundColor?: string;
     width?: string;
 }
 
-const ProgressIndicator: React.FC<ProgressIndicatorProps> = (props) => {
-    const {
-        width
-    } = props;
+const StyledDiv = styled.div<ProgressIndicatorProps>`
+    ${props => props.width ? css`width: ${props.width};` : ''}
+    background: ${background};
+`;
 
-    const widthObject = typeof width === 'undefined' ? {} : {width};
-    const style = {
-        ...widthObject,
-        background: background(props)
-    };
-
-    return <div className={styles.progressIndicator} style={style}></div>;
-}
+const ProgressIndicator: React.FC<ProgressIndicatorProps> = (props) => <StyledDiv {...props} />;
 
 export default ProgressIndicator;
 
-const background = (props:ProgressIndicatorProps): string => {
+function background(props:ProgressIndicatorProps) {
     const {
         current,
         total,
-        progressColor = '#369',
-        backgroundColor = '#FFF'
     } = props;
 
     const clampedMax = Math.max(0.0001, total); // avoid divide by zero
@@ -51,10 +41,10 @@ const background = (props:ProgressIndicatorProps): string => {
     const fraction = clampedMin / clampedMax * 100;
 
     if (fraction < .2) {
-        return backgroundColor;
+        return css`${colors.canvas}`;
     }
     if (fraction > 99.8) {
-        return progressColor;
+        return css`${colors.accentDark}`;
     }
-    return `linear-gradient(to right, ${progressColor} ${fraction - 0.1}%, ${backgroundColor} ${fraction + 0.1}%)`;
+    return css`linear-gradient(to right, ${colors.accentDark} ${fraction - 0.1}%, ${colors.canvas} ${fraction + 0.1}%)`;
 }
