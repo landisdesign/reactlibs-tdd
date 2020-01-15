@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button outputs correct styling 1`] = `
+.c0 {
+  background: linear-gradient(to bottom,#FFF 5%,#EEE 10%,#BBB 90%,#888 100%);
+  border: 1px solid #689;
+  border-radius: .25rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.c0:hover {
+  background: #DDD;
+}
+
+.c0:active {
+  background: linear-gradient(to bottom,#888 0%,#EEE 10%,#BBB 90%,#FFF 100%);
+}
+
+.c0[disabled] {
+  border: 1px solid #CCC;
+  background: #EEE;
+  color: #666;
+  cursor: arrow;
+}
+
+@media (min-width:48rem) {
+  .c0 {
+    font: 900 1.25rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+@media (max-width:48rem) {
+  .c0 {
+    font: 900 .85rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+<button
+  className="c0"
+>
+  standard
+</button>
+`;
+
+exports[`Button outputs correct styling 2`] = `
+.c0 {
+  background: linear-gradient(to bottom,#FFF 5%,#EEE 10%,#BBB 90%,#888 100%);
+  border: 1px solid #689;
+  border-radius: .25rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.c0:hover {
+  background: #DDD;
+}
+
+.c0:active {
+  background: linear-gradient(to bottom,#888 0%,#EEE 10%,#BBB 90%,#FFF 100%);
+}
+
+.c0[disabled] {
+  border: 1px solid #CCC;
+  background: #EEE;
+  color: #666;
+  cursor: arrow;
+}
+
+@media (min-width:48rem) {
+  .c0 {
+    font: 900 1.25rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+@media (max-width:48rem) {
+  .c0 {
+    font: 900 .85rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+<button
+  className="c0"
+  disabled={true}
+>
+  plain disabled
+</button>
+`;
+
+exports[`Button outputs correct styling 3`] = `
+.c0 {
+  background: linear-gradient(to bottom,#FFF 5%,#DEF 10%,#689 90%,#356 100%);
+  border: 1px solid #689;
+  border-radius: .25rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.c0:hover {
+  background: #9AC;
+}
+
+.c0:active {
+  background: linear-gradient(to bottom,#356 0%,#DEF 10%,#689 90%,#FFF 100%);
+}
+
+.c0[disabled] {
+  border: 1px solid #CCC;
+  background: #DDD;
+  color: #666;
+  cursor: arrow;
+}
+
+@media (min-width:48rem) {
+
+}
+
+@media (max-width:48rem) {
+
+}
+
+@media (min-width:48rem) {
+  .c0 {
+    font: 900 1.25rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+@media (max-width:48rem) {
+  .c0 {
+    font: 900 .85rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+<button
+  className="c0"
+  default={true}
+>
+  default
+</button>
+`;
+
+exports[`Button outputs correct styling 4`] = `
+.c0 {
+  background: linear-gradient(to bottom,#FFF 5%,#DEF 10%,#689 90%,#356 100%);
+  border: 1px solid #689;
+  border-radius: .25rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.c0:hover {
+  background: #9AC;
+}
+
+.c0:active {
+  background: linear-gradient(to bottom,#356 0%,#DEF 10%,#689 90%,#FFF 100%);
+}
+
+.c0[disabled] {
+  border: 1px solid #CCC;
+  background: #DDD;
+  color: #666;
+  cursor: arrow;
+}
+
+@media (min-width:48rem) {
+
+}
+
+@media (max-width:48rem) {
+
+}
+
+@media (min-width:48rem) {
+  .c0 {
+    font: 900 1.25rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+@media (max-width:48rem) {
+  .c0 {
+    font: 900 .85rem "mr-eaves-modern",sans-serif;
+  }
+}
+
+<button
+  className="c0"
+  default={true}
+  disabled={true}
+>
+  default disabled
+</button>
+`;

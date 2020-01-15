@@ -1,50 +1,57 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import Button from '.';
+import { ThemeProvider } from 'styled-components';
+import 'jest-styled-components';
+
+const getButton = (button: React.ReactNode) =>
+    mount(<ThemeProvider theme={{ mode: 'light' }}>{button}</ThemeProvider>).find('button');
 
 test('Standard <button> attributes passed through', () => {
     const testClick = jest.fn();
-    const wrapper = shallow(<Button aria-pressed='false' type='submit' onClick={testClick}>click</Button>);
+    let button = getButton(<Button aria-pressed='false' type='submit' onClick={testClick}>click</Button>);
 
-    expect(wrapper.text()).toEqual('click');
-    expect(wrapper.find('button')).toHaveLength(1);
-    expect(wrapper.find('[aria-pressed="false"]')).toHaveLength(1);
-    expect(wrapper.find('[type="submit"]')).toHaveLength(1);
-
-    wrapper.simulate('click');
+    expect(button.text()).toEqual('click');
+    expect(button.prop('aria-pressed')).toEqual('false');
+    expect(button.prop('type')).toEqual('submit');
+    button.simulate('click');
     expect(testClick.mock.calls).toHaveLength(1);
+
+    button = getButton(<Button disabled>disabled</Button>);
+    expect(button.prop('disabled')).toBeDefined();
 });
 
-test('isDefault outputs .default instead of .button', () => {
-    let wrapper = shallow(<Button>button</Button>);
-    expect(wrapper.find('.button')).toHaveLength(1);
+test('Button outputs correct styling', () => {
+    let button = getButton(<Button>standard</Button>);
+    expect(toJson(button)).toMatchSnapshot();
 
-    wrapper = shallow(<Button isDefault={false}>button</Button>);
-    expect(wrapper.find('.button')).toHaveLength(1);
+    button = getButton(<Button disabled>plain disabled</Button>);
+    expect(toJson(button)).toMatchSnapshot();
 
-    wrapper = shallow(<Button isDefault={true}>default</Button>);
-    expect(wrapper.find('.button')).toHaveLength(0);
-    expect(wrapper.find('.default')).toHaveLength(1);
+    button = getButton(<Button default>default</Button>);
+    expect(toJson(button)).toMatchSnapshot();
+
+    button = getButton(<Button disabled default>default disabled</Button>);
+    expect(toJson(button)).toMatchSnapshot();
 });
 
 test('class names override initial classes', () => {
-    let wrapper = shallow(<Button className='different-class'>different</Button>);
-    expect(wrapper.find('.different-class')).toHaveLength(1);
-    expect(wrapper.find('.button')).toHaveLength(0);
+    let button = getButton(<Button className='different-class'>different</Button>);
+    expect(button.prop('className')).toEqual('different-class');
 
-    wrapper = shallow(<Button isDefault={true} className='another-class'>another</Button>);
-    expect(wrapper.find('.another-class')).toHaveLength(1);
-    expect(wrapper.find('.default')).toHaveLength(0);
+    button = getButton(<Button default className='another-class'>another</Button>);
+    expect(button.prop('className')).toEqual('another-class');
 });
 
 test('children rendered inside <button>', () => {
     const content = <b>Content</b>;
-    const wrapper = shallow(<Button>{ content }</Button>);
-    expect(wrapper.contains(content)).toBe(true);
+    const button = getButton(<Button>{ content }</Button>);
+    expect(button.contains(content)).toBe(true);
 });
 
 test('render function overrides children', () => {
     const content = <b>Content</b>;
-    const wrapper = shallow(<Button render={ () => content }/>);
-    expect(wrapper.contains(content)).toBe(true);
+    const button = getButton(<Button render={ () => content }/>);
+    expect(button.contains(content)).toBe(true);
 });
