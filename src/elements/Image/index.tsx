@@ -1,36 +1,26 @@
-import React from 'react';
-import styles from './Image.module.scss';
+import React, { ImgHTMLAttributes } from 'react';
+import styled, { css } from 'styled-components';
 
-const ALIGN_VALUES = ['center'] as const;
+const alignments = {
+    center: css`
+        display: block;
+        margin: 1rem auto;
+    `
+} as const;
 
 /**
  * Properties for Image, in addition to those available to HTMLImageElement
  *
  *  @property align Aligns image according to the provided constant
  */
-export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-    align?: typeof ALIGN_VALUES[number];
+export interface ImageProps {
+    align?: keyof typeof alignments;
 }
 
-const Image: React.FC<ImageProps> = (props) => {
-    const {
-        align,
-        className,
-        ...passedProps
-    } = props;
+const StyledImage = styled.img<ImageProps>`
+    ${props => props.align ? (alignments[props.align] ?? '') : ''}
+`;
 
-    let combinedClasses = [];
-    if (className) {
-        combinedClasses.push(className);
-    }
-    if (align) {
-        combinedClasses.push(styles[align]);
-    }
-    const classProp = combinedClasses.length ? {className: combinedClasses.join(' ')} : {};
-
-    const imgProps = {...passedProps, ...classProp};
-
-    return <img {...imgProps}/>;
-}
+const Image: React.FC<ImageProps & ImgHTMLAttributes<HTMLImageElement>> = (props) => <StyledImage {...props} />;
 
 export default Image;
