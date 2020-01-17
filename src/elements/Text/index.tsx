@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './Text.module.scss';
+import styled, { css } from 'styled-components';
+import { fontFamily, media, fontSize } from '../../common/styling';
 
 const textTypes = ['story'] as const;
 
@@ -15,19 +16,40 @@ export interface TextProps {
     html?: string;
 }
 
+
 const Text: React.FC<TextProps> = (props) => {
     const {
-        type = 'default',
+        type,
         html,
         children
     } = props;
 
-    const className = styles[type] ?? styles.default;
-
     return html
-        ? <div className={className} dangerouslySetInnerHTML={{ __html: html }} />
-        : <div className={className}>{children}</div>
+        ? <StyledText type={type} dangerouslySetInnerHTML={{ __html: html }} />
+        : <StyledText type={type}>{children}</StyledText>
     ;
 }
 
 export default Text;
+
+const StyledText = styled.div<TextProps>`
+    ${props => props.type === 'story' ? css`
+        padding-right: .5rem;
+        font-family: ${fontFamily.serif};
+        line-height: 2;
+    ` : css`
+        font-family: ${fontFamily.sans};
+    `}
+
+    ${media.desktop`
+        font-size: ${fontSize.desktop.normal};
+    `}
+
+    ${media.tablet`
+        font-size: ${fontSize.tablet.normal};
+    `}
+
+    ${media.phone`
+        font-size: ${fontSize.phone.normal};
+    `}
+`;
