@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { ThemeProvider } from 'styled-components';
+
+import { getThemedContent, testStyling, testMedia } from '../../common/__testing-utils';
 import Copyright from '.';
-import 'jest-styled-components';
 
 test('Copyright creates expected output', () => {
-    const output = <div className='copyright'>Copyright ©{(new Date()).getFullYear()} Michael Landis</div>;
-    const wrapper = shallow(<Copyright/>);
+    const output = <div>Copyright ©{(new Date()).getFullYear()} Michael Landis</div>;
+    const wrapper = getThemedContent(<Copyright />, 'div');
 
     expect(wrapper.contains(output));
 });
@@ -17,11 +16,16 @@ test('Copyright styling is maintained', () => {
         color: '#246',
         font: '1rem/1.5 "mr-eaves-modern",sans-serif',
         'text-align': 'center'
-    } as const;
+    };
 
-    const wrapper = mount(<ThemeProvider theme={{ mode: 'light' }}><Copyright /></ThemeProvider>).find('div');
+    const wrapper = getThemedContent(<Copyright />, 'div');
 
-    Object.keys(expectedStyles).forEach(key => expect(wrapper).toHaveStyleRule(key, expectedStyles[key as keyof typeof expectedStyles]));
-    expect(wrapper).toHaveStyleRule('font-size', '1.25rem', { media: '(min-width:48rem)' });
-    expect(wrapper).toHaveStyleRule('font-size', '.85rem', { media: '(max-width:48rem)' });
+    testStyling(wrapper, expectedStyles);
+
+    const expectedMediaStyles = {
+        '(max-width:48rem)': {'font-size': '.85rem'},
+        '(min-width:48rem)': {'font-size': '1.25rem'}
+    }
+
+    testMedia(wrapper, expectedMediaStyles);
 });

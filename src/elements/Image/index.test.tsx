@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
+
+import { testStyling, getThemedContent } from '../../common/__testing-utils';
 import Image, { ImageProps } from '.';
-import 'jest-styled-components';
 
 test('Outputs image with passed through attributes', () => {
     const testLoad = () => {};
-    const wrapper = mount(<Image src='foo' role='button' onLoad={testLoad} />).find('img');
+    const wrapper = getThemedContent(<Image src='foo' role='button' onLoad={testLoad} />, 'img');
 
     expect(wrapper).toHaveLength(1);
     expect(wrapper.prop('src')).toEqual('foo');
@@ -29,7 +29,7 @@ test('Adds alignment styling', () => {
     };
 
     Object.keys(alignments).forEach(key => {
-        let wrapper = mount(<Image align={key as keyof ImageProps['align']} />);
-        Object.keys(alignments[key]).forEach(property => expect(wrapper).toHaveStyleRule(property, alignments[key][property]));
+        let wrapper = getThemedContent(<Image align={key as keyof ImageProps['align']} />, 'img');
+        testStyling(wrapper, alignments[key]);
     });
 });
